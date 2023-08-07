@@ -1,0 +1,22 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{C502D5D5-4E4A-6A0A-1C48-A49C81464725}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "AtomicThreat",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "ModelingToolsEditorMode",
+			"Enabled": true,
+			"TargetAllowList": [
+				"Editor"
+			]
+		}
+	]
+}
