@@ -9,7 +9,6 @@ public class AtomicThreatTarget : TargetRules
 	{
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
-		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_1;
-		ExtraModuleNames.Add("AtomicThreat");
+		ExtraModuleNames.AddRange( new string[] { "AtomicThreat" } );
 	}
 }
