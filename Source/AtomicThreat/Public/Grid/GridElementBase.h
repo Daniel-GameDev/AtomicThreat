@@ -14,8 +14,17 @@ class ATOMICTHREAT_API AGridElementBase : public AActor
 public:
 	AGridElementBase();
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool bDestroyed;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	float Points;
+
 protected:
 	virtual void BeginPlay() override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UStaticMeshComponent* GridMesh;
 
 public:
 	virtual void Tick(float DeltaTime) override;

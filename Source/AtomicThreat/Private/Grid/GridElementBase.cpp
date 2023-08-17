@@ -7,6 +7,8 @@ AGridElementBase::AGridElementBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+	GridMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("GridBaseMesh"));
+	GridMesh->SetupAttachment(GetRootComponent());
 }
 
 void AGridElementBase::BeginPlay()

@@ -8,19 +8,7 @@
 
 class AGridElementBase;
 
-USTRUCT(BlueprintType)
-struct FGridElementState
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditInstanceOnly, BlueprintReadOnly)
-	TSubclassOf<AGridElementBase> OnCreate;
-
-	UPROPERTY(EditInstanceOnly, BlueprintReadOnly)
-	TSubclassOf<AGridElementBase> OnDestroy;
-};
-
-UCLASS(Config=Game, BlueprintType)
+UCLASS(Config = Game, BlueprintType)
 class ATOMICTHREAT_API AGridBase : public AActor
 {
 	GENERATED_BODY()
@@ -31,13 +19,16 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TArray<struct FGridElementState> GridElementsToSpawn;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = GridSettings)
+	TArray<TSubclassOf<AGridElementBase>> GridElementsToSpawn;
 
-	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = GridSettings)
-	bool bShowDebugGrid;
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = GridSettings)
+	float GridSpacing;
 
 public:
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION(BlueprintCallable)
+	TArray<AGridElementBase*> CreateBaseGird();
 
 };
