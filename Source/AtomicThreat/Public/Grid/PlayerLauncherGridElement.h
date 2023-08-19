@@ -6,12 +6,21 @@
 #include "Grid/LauncherBaseGridElement.h"
 #include "PlayerLauncherGridElement.generated.h"
 
-/**
- * 
- */
+class AAtomicPawn;
+
 UCLASS()
 class ATOMICTHREAT_API APlayerLauncherGridElement : public ALauncherBaseGridElement
 {
 	GENERATED_BODY()
+
+public:
+	virtual void BeginPlay() override;
+
+protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSubclassOf<AAtomicPawn> AtomicPawn;
+
+	UFUNCTION()
+	void SpawnAtomicPawn(APlayerController* PlayerController);
 	
 };

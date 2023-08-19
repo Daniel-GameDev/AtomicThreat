@@ -4,29 +4,35 @@
 #include "Framework/AtomicPawn.h"
 #include "Framework/AtomicPlayerController.h"
 #include "Grid/PlayerLauncherGridElement.h"
+#include "Gameplay/Rockets/RocketBase.h"
 
-AAtomicPawn::AAtomicPawn() //DELETE !!!
+AAtomicPawn::AAtomicPawn()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	AtomicPlayerController = Cast<AAtomicPlayerController>(GetController());
 }
 
 void AAtomicPawn::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	AtomicPlayerController = Cast<AAtomicPlayerController>(GetController());
 }
 
 void AAtomicPawn::Launch()
 {
 	FHitResult HitResult;
-
-	if (AtomicPlayerController->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel1), true, HitResult))
+	if (AtomicPlayerController)
 	{
-		TSubclassOf<ARocketBase> Rocket; //TODO: Property for BP_Rocket to set in pawn defaults
-		PlayerLauncherGridElement->LaunchRocket(Rocket, HitResult.Location, 1.f); //TODO: Difficulty Increment - create Property for pawn
+		if (AtomicPlayerController->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel1), true, HitResult))
+		{
+			if (Rocket)
+			{
+				PlayerLauncherGridElement->LaunchRocket(Rocket, HitResult.Location, 1.f); //TODO: Difficulty Increment - create Property for pawn
+			}
+		}
 	}
+	
 }
 
 void AAtomicPawn::Tick(float DeltaTime)

@@ -8,8 +8,9 @@
 
 class AAtomicPlayerController;
 class APlayerLauncherGridElement;
+class ARocketBase;
 
-UCLASS() //DELETE !!!
+UCLASS()
 class ATOMICTHREAT_API AAtomicPawn : public APawn
 {
 	GENERATED_BODY()
@@ -25,6 +26,9 @@ protected:
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly)
 	AAtomicPlayerController* AtomicPlayerController;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<ARocketBase> Rocket;
 
 	UFUNCTION(BlueprintCallable)
 	void Launch();

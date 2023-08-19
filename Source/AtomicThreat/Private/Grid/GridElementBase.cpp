@@ -7,8 +7,11 @@ AGridElementBase::AGridElementBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("GridSceneRoot"));
+	SetRootComponent(SceneRoot);
+
 	GridMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("GridBaseMesh"));
-	GridMesh->SetupAttachment(GetRootComponent());
+	GridMesh->SetupAttachment(SceneRoot);
 }
 
 void AGridElementBase::BeginPlay()

@@ -13,6 +13,9 @@ ARocketBase::ARocketBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("RocketSceneRoot"));
+	SetRootComponent(SceneRoot);
+
 	RocketForward = CreateDefaultSubobject<UArrowComponent>(TEXT("RocketForward"));
 	RocketForward->SetupAttachment(GetRootComponent());
 
@@ -38,7 +41,8 @@ void ARocketBase::BeginPlay()
 
 	if (GetWorld())
 	{
-		StartPoint, PreviousPoint = GetActorLocation();
+		StartPoint = GetActorLocation();
+		PreviousPoint = GetActorLocation();
 
 		CreateTarget(); //TODO: Rocket Notife Func for creation / destroy
 	}
@@ -66,7 +70,7 @@ void ARocketBase::DrawDebugLineFromStartToEnd()
 
 void ARocketBase::RocketRotation(float DeltaTime)
 {
-	RocketForward->SetRelativeRotation(FRotator(DeltaTime*RotationSpeed+RocketForward->GetRelativeRotation().Roll, 0.f, 0.f));
+	RocketForward->SetRelativeRotation(FRotator(0.f, 0.f, DeltaTime*RotationSpeed+RocketForward->GetRelativeRotation().Roll));
 }
 
 void ARocketBase::TargetHit()
@@ -93,8 +97,9 @@ void ARocketBase::Tick(float DeltaTime)
 void ARocketBase::Destroyed()
 {
 	//TODO: Rocket Notify Func - destroyed
-	TargetSceneRoot->GetOwner()->Destroy();
-
+	if (TargetSceneRoot)
+		TargetSceneRoot->GetOwner()->Destroy();
+	
 	Super::Destroyed();
 }
 

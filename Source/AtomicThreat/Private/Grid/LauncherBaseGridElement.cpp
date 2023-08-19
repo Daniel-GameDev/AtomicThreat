@@ -18,7 +18,8 @@ void ALauncherBaseGridElement::LaunchRocket(TSubclassOf<ARocketBase> RocketType,
 {
 	if (GetWorld())
 	{
-		AActor* RocketActor = UGameplayStatics::BeginDeferredActorSpawnFromClass(GetWorld(), RocketType, FTransform(LaunchPoint->GetComponentLocation()), ESpawnActorCollisionHandlingMethod::Undefined, nullptr);
+		FVector Location = LaunchPoint->GetComponentLocation();
+		AActor* RocketActor = UGameplayStatics::BeginDeferredActorSpawnFromClass(GetWorld(), RocketType, FTransform(Location), ESpawnActorCollisionHandlingMethod::Undefined, nullptr);
 		
 		if (ARocketBase* RocketBase = Cast<ARocketBase>(RocketActor))
 		{
@@ -26,6 +27,6 @@ void ALauncherBaseGridElement::LaunchRocket(TSubclassOf<ARocketBase> RocketType,
 			RocketBase->DifficultyIncrement = DifficultyIncrement;
 		}
 
-		UGameplayStatics::FinishSpawningActor(RocketActor, FTransform(LaunchPoint->GetComponentLocation()));
+		UGameplayStatics::FinishSpawningActor(RocketActor, FTransform(Location));
 	}
 }

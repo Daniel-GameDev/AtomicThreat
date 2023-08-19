@@ -29,6 +29,9 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	USceneComponent* SceneRoot;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UArrowComponent* RocketForward;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
