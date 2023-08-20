@@ -41,8 +41,8 @@ void ARocketBase::BeginPlay()
 
 	if (GetWorld())
 	{
-		StartPoint = GetActorLocation();
-		PreviousPoint = GetActorLocation();
+		StartPoint = PreviousPoint = GetActorLocation();
+		//PreviousPoint = GetActorLocation();
 
 		CreateTarget(); //TODO: Rocket Notife Func for creation / destroy
 	}

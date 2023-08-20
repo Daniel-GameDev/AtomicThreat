@@ -11,7 +11,7 @@ class UCapsuleComponent;
 class UProjectileMovementComponent;
 class ATargetBase;
 
-UCLASS()
+UCLASS(Config = Game, BlueprintType)
 class ATOMICTHREAT_API ARocketBase : public AActor
 {
 	GENERATED_BODY()
@@ -19,10 +19,10 @@ class ATOMICTHREAT_API ARocketBase : public AActor
 public:
 	ARocketBase();
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Target/*, Meta(ExposeOnSpawn = true)*/)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Target)
 	FVector TargetVector;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = RocketSettings/*, Meta(ExposeOnSpawn = true)*/) // Expose MB move to Public
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = RocketSettings)
 	float DifficultyIncrement = 1.f;
 
 protected:
@@ -43,19 +43,19 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UProjectileMovementComponent* ProjectileMovement;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
+	UPROPERTY(Config, EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
 	float InitialSpeed = 4000.f;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
+	UPROPERTY(Config, EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
 	float MaxSpeed = 4000.f;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
+	UPROPERTY(Config, EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
 	float RotationSpeed = 100.f;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
+	UPROPERTY(Config, EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
 	float ToleranceTargetCoordinate = 400.f;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
+	UPROPERTY(Config, EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
 	float HomingAccelerationMagnitude = 16000.f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Target)
