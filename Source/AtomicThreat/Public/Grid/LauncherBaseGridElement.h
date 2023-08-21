@@ -25,6 +25,6 @@ protected:
 
 public:
 	UFUNCTION(BlueprintCallable)
-	void LaunchRocket(TSubclassOf<ARocketBase> RocketType, FVector TargetVector, float DifficultyIncrement);
+	virtual void LaunchRocket(TSubclassOf<ARocketBase> RocketType, FVector TargetVector, float DifficultyIncrement);
 
 };

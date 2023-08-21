@@ -21,32 +21,20 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	FVector ExplosionCoordinate;
 
-	UFUNCTION()
-	void TimelineProgress(float Value);
-
 protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	float Size;
+	float Size = 500.f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	float Duration;
+	float Duration = 3.f;
 
 	UPROPERTY()
 	FTimeline CurveTimeline;
 
 	UPROPERTY(EditAnywhere, Category = Timeline)
 	UCurveFloat* CurveFloat;
-
-	/*UPROPERTY()
-	FVector StartLoc;
-
-	UPROPERTY()
-	FVector EndLoc;*/
-
-	UPROPERTY(EditAnywhere, Category = Timeline)
-	float ZOffset;
 
 	UFUNCTION()
 	void TraceExplosion(float ExpSize);

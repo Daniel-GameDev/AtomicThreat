@@ -28,14 +28,20 @@ ACityGridElement::ACityGridElement()
 void ACityGridElement::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
 	UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit)
 {
-	bDestroyed = true;
-	DefaultCityMesh->SetVisibility(false);
-	DestroyedCityMesh->SetVisibility(true);
+	if (!bDestroyed)
+	{
+		bDestroyed = true;
+		DefaultCityMesh->SetVisibility(false);
+		DestroyedCityMesh->SetVisibility(true);
+	}
 }
 
 void ACityGridElement::RestoreCity()
 {
-	bDestroyed = false;
-	DefaultCityMesh->SetVisibility(true);
-	DestroyedCityMesh->SetVisibility(false);
+	if (bDestroyed)
+	{
+		bDestroyed = false;
+		DefaultCityMesh->SetVisibility(true);
+		DestroyedCityMesh->SetVisibility(false);
+	}
 }

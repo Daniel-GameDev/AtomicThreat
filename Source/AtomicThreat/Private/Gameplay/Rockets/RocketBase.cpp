@@ -26,12 +26,6 @@ ARocketBase::ARocketBase()
 	RocketCapsule->SetupAttachment(RocketMesh);
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
-	ProjectileMovement->InitialSpeed = this->InitialSpeed * DifficultyIncrement;
-	ProjectileMovement->MaxSpeed = this->MaxSpeed * DifficultyIncrement;
-	ProjectileMovement->bRotationFollowsVelocity = true;
-	ProjectileMovement->ProjectileGravityScale = 0.f;
-	ProjectileMovement->bIsHomingProjectile = true;
-	ProjectileMovement->HomingAccelerationMagnitude = this->HomingAccelerationMagnitude;
 
 }
 
@@ -41,6 +35,8 @@ void ARocketBase::BeginPlay()
 
 	if (GetWorld())
 	{
+		SetProjectileSettings();
+
 		StartPoint = PreviousPoint = GetActorLocation();
 		//PreviousPoint = GetActorLocation();
 
@@ -50,11 +46,15 @@ void ARocketBase::BeginPlay()
 
 void ARocketBase::CreateTarget()
 {
-	FActorSpawnParameters SpawnParams;
-	SpawnParams.Owner = this;
-	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	TargetSceneRoot = GetWorld()->SpawnActor<ATargetBase>(Target, TargetVector, FRotator(), SpawnParams)->GetRootComponent();
-	ProjectileMovement->HomingTargetComponent = TargetSceneRoot;
+	if (Target)
+	{
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Owner = this;
+		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+		TargetSceneRoot = GetWorld()->SpawnActor<ATargetBase>(Target, TargetVector, FRotator(), SpawnParams)->GetRootComponent();
+		ProjectileMovement->HomingTargetComponent = TargetSceneRoot;
+	}
 }
 
 void ARocketBase::DrawDebugLineRocketTrajectory()
@@ -76,6 +76,16 @@ void ARocketBase::RocketRotation(float DeltaTime)
 void ARocketBase::TargetHit()
 {
 	this->Destroy();
+}
+
+void ARocketBase::SetProjectileSettings()
+{
+	ProjectileMovement->InitialSpeed = this->InitialSpeed * DifficultyIncrement;
+	ProjectileMovement->MaxSpeed = this->MaxSpeed * DifficultyIncrement;
+	ProjectileMovement->bRotationFollowsVelocity = true;
+	ProjectileMovement->ProjectileGravityScale = 0.f;
+	ProjectileMovement->bIsHomingProjectile = true;
+	ProjectileMovement->HomingAccelerationMagnitude = this->HomingAccelerationMagnitude;
 }
 
 void ARocketBase::Tick(float DeltaTime)

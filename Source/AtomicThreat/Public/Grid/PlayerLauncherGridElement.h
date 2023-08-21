@@ -7,6 +7,7 @@
 #include "PlayerLauncherGridElement.generated.h"
 
 class AAtomicPawn;
+class AAmmo;
 
 UCLASS()
 class ATOMICTHREAT_API APlayerLauncherGridElement : public ALauncherBaseGridElement
@@ -20,7 +21,26 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSubclassOf<AAtomicPawn> AtomicPawn;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSubclassOf<AAmmo> AmmoClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FVector AmmoDisplayLocation = FVector(-900.f, 0.f, -450.f);
+
 	UFUNCTION()
 	void SpawnAtomicPawn(APlayerController* PlayerController);
-	
+
+public:
+	virtual void LaunchRocket(TSubclassOf<ARocketBase> RocketType, FVector TargetVector, float DifficultyIncrement) override;
+
+	UFUNCTION()
+	void SpawnAmmo();
+
+	UFUNCTION()
+	void DestroyAmmo();
+
+private:
+	UPROPERTY()
+	AAmmo* Ammo;
+
 };

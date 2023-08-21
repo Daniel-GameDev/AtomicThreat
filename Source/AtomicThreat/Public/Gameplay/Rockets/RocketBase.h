@@ -92,6 +92,9 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void TargetHit();
 
+	UFUNCTION()
+	void SetProjectileSettings();
+
 public:
 	virtual void Tick(float DeltaTime) override;
 
