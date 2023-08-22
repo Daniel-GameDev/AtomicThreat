@@ -29,6 +29,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable)
-	TArray<AGridElementBase*> CreateBaseGird();
+	void CreateBaseGird();
 
 };

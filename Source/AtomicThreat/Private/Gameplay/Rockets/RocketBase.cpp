@@ -26,6 +26,12 @@ ARocketBase::ARocketBase()
 	RocketCapsule->SetupAttachment(RocketMesh);
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
+	ProjectileMovement->InitialSpeed = this->InitialSpeed * DifficultyIncrement;
+	ProjectileMovement->MaxSpeed = this->MaxSpeed * DifficultyIncrement;
+	ProjectileMovement->HomingAccelerationMagnitude = this->HomingAccelerationMagnitude;
+	ProjectileMovement->bRotationFollowsVelocity = true;
+	ProjectileMovement->ProjectileGravityScale = 0.f;
+	ProjectileMovement->bIsHomingProjectile = true;
 
 }
 
@@ -82,9 +88,6 @@ void ARocketBase::SetProjectileSettings()
 {
 	ProjectileMovement->InitialSpeed = this->InitialSpeed * DifficultyIncrement;
 	ProjectileMovement->MaxSpeed = this->MaxSpeed * DifficultyIncrement;
-	ProjectileMovement->bRotationFollowsVelocity = true;
-	ProjectileMovement->ProjectileGravityScale = 0.f;
-	ProjectileMovement->bIsHomingProjectile = true;
 	ProjectileMovement->HomingAccelerationMagnitude = this->HomingAccelerationMagnitude;
 }
 

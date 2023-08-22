@@ -22,10 +22,10 @@ void AGridBase::Tick(float DeltaTime)
 
 }
 
-TArray<AGridElementBase*> AGridBase::CreateBaseGird()
+void AGridBase::CreateBaseGird()
 {
 	float Spacing = 0.f;
-	TArray<AGridElementBase*> Elements;
+	//TArray<AGridElementBase*> Elements;
 
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.Owner = this;
@@ -40,9 +40,9 @@ TArray<AGridElementBase*> AGridBase::CreateBaseGird()
 		Spacing += GridSpacing;
 
 		NewGridElement->AttachToActor(this, TransformRules);
-		Elements.Add(NewGridElement);
+		//Elements.Add(NewGridElement);
 	}
 	
-	return Elements;
+	//return Elements;
 }
 
