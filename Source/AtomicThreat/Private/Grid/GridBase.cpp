@@ -31,15 +31,21 @@ void AGridBase::CreateBaseGird()
 	SpawnParams.Owner = this;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-	FAttachmentTransformRules TransformRules = FAttachmentTransformRules(EAttachmentRule::KeepWorld, EAttachmentRule::KeepWorld, EAttachmentRule::KeepWorld, false);
+	FAttachmentTransformRules TransformRules = FAttachmentTransformRules(EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, false);
+	FVector ActorLocation;
 
 	for (TSubclassOf<AGridElementBase> TGridElement : GridElementsToSpawn)
 	{
-		AGridElementBase* NewGridElement = GetWorld()->SpawnActor<AGridElementBase>
-			(TGridElement, FVector(GetActorLocation().X, GetActorLocation().Y + Spacing, GetActorLocation().Z), GetActorRotation(), SpawnParams);
-		Spacing += GridSpacing;
+		if (TGridElement)
+		{
+			AGridElementBase* NewGridElement = GetWorld()->SpawnActor<AGridElementBase>
+				(TGridElement, FVector(ActorLocation.X, ActorLocation.Y + Spacing, ActorLocation.Z), GetActorRotation(), SpawnParams);
+			Spacing = GridSpacing;
 
-		NewGridElement->AttachToActor(this, TransformRules);
+			ActorLocation = NewGridElement->GetActorLocation();
+			NewGridElement->AttachToActor(this, TransformRules);
+		}
+		
 		//Elements.Add(NewGridElement);
 	}
 	

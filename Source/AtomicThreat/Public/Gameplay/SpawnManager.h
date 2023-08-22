@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Common/RocketStructure.h"
-//#include "Common/DifficultyValueStructure.h"
+#include "Common/DifficultyValueStructure.h"
 #include "SpawnManager.generated.h"
 
 class AGridBase;
@@ -66,16 +66,16 @@ protected:
 	float SpawnTimeMin = 1.f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Spawner)
-	float SpawnerLoopFrequencyTime = 0.5;
+	float SpawnerLoopFrequencyTime = 0.5f;
 
 	UPROPERTY()
 	TArray<float> SpawnTimeArray;
 
 	UPROPERTY()
-	int32 RocketAmount;
+	int32 RocketsLeft;
 
-	//UPROPERTY()
-	//FDifficultyData DifficultyData;
+	UPROPERTY()
+	int32 DifficultyIncrement;
 
 	UPROPERTY()
 	FTimerHandle SpawnDelayTimerHandle;
@@ -85,6 +85,12 @@ protected:
 
 	UPROPERTY()
 	TArray<FRocketStruct> RocketsToSpawn;
+
+	UPROPERTY()
+	TArray<FVector> CityTargets;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UStaticMeshComponent* StaticMesh;
 
 	UFUNCTION()
 	void GetRoundData();
@@ -99,7 +105,10 @@ protected:
 	void StartRound();
 
 	UFUNCTION()
-	bool GetRandomRocketFromRoundData(TSubclassOf<ARocketBase>* RocketClass);
+	bool GetRandomRocketFromRoundData(TSubclassOf<ARocketBase>& RocketClass);
+
+	UFUNCTION()
+	void SpawnGameGrids();
 
 public:
 	virtual void Tick(float DeltaTime) override;

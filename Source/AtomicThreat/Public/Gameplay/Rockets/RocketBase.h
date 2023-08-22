@@ -25,6 +25,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = RocketSettings)
 	float DifficultyIncrement = 1.f;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = RocketSettings)
+	bool bSideLaunch;
+
 protected:
 	virtual void BeginPlay() override;
 
