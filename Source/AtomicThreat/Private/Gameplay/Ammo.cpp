@@ -79,10 +79,10 @@ void AAmmo::BeginPlay()
 {
 	Super::BeginPlay();
 
-	SetAmmoPosition();
+	RefillAmmo();
 }
 
-void AAmmo::SetAmmoPosition() //Delete
+void AAmmo::RefillAmmo() //Delete
 {
 	/*for (UStaticMeshComponent* TStaticMesh : Rockets)
 	{
@@ -114,6 +114,16 @@ void AAmmo::SetAmmoPosition() //Delete
 
 		Rockets.Add(NewStaticMesh);
 	}
+}
+
+void AAmmo::ClearAmmo()
+{
+	for (UStaticMeshComponent* TRocket : Rockets)
+	{
+		TRocket->DestroyComponent();
+	}
+
+	Rockets.Empty();
 }
 
 void AAmmo::Tick(float DeltaTime)

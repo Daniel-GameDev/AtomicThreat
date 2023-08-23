@@ -25,8 +25,14 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = RocketSettings)
 	float DifficultyIncrement = 1.f;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = RocketSettings)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
 	bool bSideLaunch;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
+	bool bMultiRocket;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = RocketSettings)
+	TArray<FVector> TargetVectors;
 
 protected:
 	virtual void BeginPlay() override;

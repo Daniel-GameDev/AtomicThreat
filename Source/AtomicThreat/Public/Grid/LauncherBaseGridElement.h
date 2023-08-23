@@ -27,4 +27,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void LaunchRocket(TSubclassOf<ARocketBase> RocketType, FVector TargetVector, float DifficultyIncrement);
 
+	UFUNCTION(BlueprintCallable)
+	virtual void LaunchMultiRocket(TSubclassOf<ARocketBase> RocketType, FVector TargetVector, TArray<FVector> TargetVectors, float DifficultyIncrement);
+
 };

@@ -5,6 +5,17 @@
 #include "Framework/AtomicPawn.h"
 #include "Kismet/GameplayStatics.h"
 #include "Gameplay/Ammo.h"
+#include "Components/CapsuleComponent.h"
+
+APlayerLauncherGridElement::APlayerLauncherGridElement()
+{
+	DestroyedLauncherMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("DestroyedMesh"));
+	DestroyedLauncherMesh->SetupAttachment(GridMesh);
+
+	LauncherCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("LauncherCapsule"));
+	LauncherCapsule->SetupAttachment(GridMesh);
+	LauncherCapsule->OnComponentBeginOverlap.AddDynamic(this, &APlayerLauncherGridElement::OnCapsuleBeginOverlap);
+}
 
 void APlayerLauncherGridElement::BeginPlay()
 {
@@ -29,6 +40,28 @@ void APlayerLauncherGridElement::SpawnAtomicPawn(APlayerController* PlayerContro
 
 	UGameplayStatics::FinishSpawningActor(AtomicPawnActor, FTransform(GetActorTransform()));
 
+}
+
+void APlayerLauncherGridElement::RestoreLauncher()
+{
+	if (bDestroyed)
+	{
+		Ammo->RefillAmmo();
+		bDestroyed = false;
+		RocketLauncherMesh->SetVisibility(true);
+		DestroyedLauncherMesh->SetVisibility(false);
+	}
+}
+
+void APlayerLauncherGridElement::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit)
+{
+	if (!bDestroyed)
+	{
+		Ammo->ClearAmmo();
+		bDestroyed = true;
+		RocketLauncherMesh->SetVisibility(false);
+		DestroyedLauncherMesh->SetVisibility(true);
+	}
 }
 
 void APlayerLauncherGridElement::LaunchRocket(TSubclassOf<ARocketBase> RocketType, FVector TargetVector, float DifficultyIncrement)

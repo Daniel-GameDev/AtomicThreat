@@ -20,6 +20,12 @@ public:
 	UFUNCTION()
 	bool UseAmmo();
 
+	UFUNCTION()
+	void RefillAmmo();
+
+	UFUNCTION()
+	void ClearAmmo();
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -42,7 +48,7 @@ protected:
 	USceneComponent* Odd;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	int AmmoAmount = 16;
+	int32 AmmoAmount = 16;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UStaticMesh* AmmoMesh;
@@ -50,10 +56,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TArray<UStaticMeshComponent*> Rockets;
 
-	UFUNCTION()
-	void SetAmmoPosition();
-
 public:
 	virtual void Tick(float DeltaTime) override;
+
+/*private:
+	UPROPERTY()
+	int32 AmmoLeft;*/
 
 };

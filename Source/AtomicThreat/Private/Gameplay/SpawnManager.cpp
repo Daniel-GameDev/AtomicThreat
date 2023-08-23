@@ -22,7 +22,7 @@ void ASpawnManager::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (GetWorld())
+	/*if (GetWorld())
 	{
 		SpawnGameGrids();
 
@@ -30,7 +30,7 @@ void ASpawnManager::BeginPlay()
 		{
 			StartRound();
 		}
-	}
+	}*/
 }
 
 void ASpawnManager::GetRoundData()
@@ -74,18 +74,55 @@ void ASpawnManager::BeginSpawn()
 				//Rocket.GetDefaultObject()->bSideLaunch;
 				if (RocketToLaunch.GetDefaultObject()->bSideLaunch)
 				{
+					TArray<AActor*> LauncherArray;
+					TArray<AActor*> TargetsArray;
+					if (FMath::RandBool())
+					{
+						RightEnemyGrid->GetAttachedActors(LauncherArray);
+						LeftEnemyGrid->GetAttachedActors(TargetsArray);
+					}
+					else
+					{
+						RightEnemyGrid->GetAttachedActors(TargetsArray);
+						LeftEnemyGrid->GetAttachedActors(LauncherArray);
+					}
 					//TODO: Side Launch
+					
+					//UpperEnemyGrid->GetAttachedActors(ElementsArray);
+					int32 RandLauncherIndex = FMath::RandRange(0, LauncherArray.Num() - 1);
+					int32 RandTargetIndex = FMath::RandRange(0, TargetsArray.Num() - 1);//change with given array
+					//ElementsArray[RandElementIndex];
+
+					SpawnBasedOnGridType(LauncherArray[RandLauncherIndex], RocketToLaunch, TargetsArray[RandTargetIndex]->GetRootComponent()->GetComponentLocation());
+					bRocketSpawned = true;
+					break;
+
 				}
 				else
 				{
 					TArray<AActor*> ElementsArray;
 					UpperEnemyGrid->GetAttachedActors(ElementsArray);
 					int32 RandElementIndex = FMath::RandRange(0, ElementsArray.Num() - 1);
-					int32 RandTargetIndex = FMath::RandRange(0, CityTargets.Num() - 1);
+					int32 RandTargetIndex = FMath::RandRange(0, CityTargets.Num() - 1);//change with given array
 					//ElementsArray[RandElementIndex];
 
-					Cast<ALauncherBaseGridElement>(ElementsArray[RandElementIndex])->LaunchRocket(RocketToLaunch, CityTargets[RandTargetIndex], DifficultyIncrement);
+					SpawnBasedOnGridType(ElementsArray[RandElementIndex], RocketToLaunch, CityTargets[RandTargetIndex]);
 					bRocketSpawned = true;
+					break;
+
+					/*if (RocketToLaunch.GetDefaultObject()->bMultiRocket)
+					{
+						
+						Cast<ALauncherBaseGridElement>(ElementsArray[RandElementIndex])->LaunchMultiRocket(RocketToLaunch, CityTargets[RandTargetIndex], CityTargets, DifficultyIncrement);
+						bRocketSpawned = true;
+						break;
+					}
+					else
+					{
+						Cast<ALauncherBaseGridElement>(ElementsArray[RandElementIndex])->LaunchRocket(RocketToLaunch, CityTargets[RandTargetIndex], DifficultyIncrement);
+						bRocketSpawned = true;
+						break;
+					}*/
 				}
 			}
 			else
@@ -98,15 +135,28 @@ void ASpawnManager::BeginSpawn()
 
 	if (bRocketSpawned)
 	{
-		RocketsLeft--;
-		if (SpawnTimeArray.IsValidIndex(0))
+		RocketsLeft--;//move 1
+		if (!SpawnTimeArray.IsValidIndex(0))
 			GetWorldTimerManager().ClearTimer(SpawnDelayTimerHandle);
 	}
 	else
 	{
-		TimerValue = UKismetMathLibrary::FClamp(TimerValue + SpawnerLoopFrequencyTime, SpawnTimeMax, SpawnTimeMin);
+		TimerValue = UKismetMathLibrary::FClamp(TimerValue + SpawnerLoopFrequencyTime, SpawnTimeMin, SpawnTimeMax);
 		//bRocketSpawned = false;
 	}
+}
+
+void ASpawnManager::SpawnBasedOnGridType(AActor* Launcher, TSubclassOf<ARocketBase> Rocket, FVector Target)
+{
+	if (Rocket.GetDefaultObject()->bMultiRocket)
+	{
+		Cast<ALauncherBaseGridElement>(Launcher)->LaunchMultiRocket(Rocket, Target, CityTargets, DifficultyIncrement);
+	}
+	else
+	{
+		Cast<ALauncherBaseGridElement>(Launcher)->LaunchRocket(Rocket, Target, DifficultyIncrement);
+	}
+
 }
 
 void ASpawnManager::StartRound()
@@ -138,15 +188,14 @@ void ASpawnManager::SpawnGameGrids()
 {
 	if (CityGrid && UpperEnemyGrid && RightEnemyGrid && LeftEnemyGrid)
 	{
+		UpperEnemyGrid->CreateBaseGird();
+		RightEnemyGrid->CreateBaseGird();
+		LeftEnemyGrid->CreateBaseGird();
 		CityGrid->CreateBaseGird();
 		TArray<AActor*> TempActors;
 		CityGrid->GetAttachedActors(TempActors);
 		for (AActor* TActor : TempActors)
 			CityTargets.Add(TActor->GetRootComponent()->GetComponentLocation());
-
-		UpperEnemyGrid->CreateBaseGird();
-		RightEnemyGrid->CreateBaseGird();
-		LeftEnemyGrid->CreateBaseGird();
 	}
 }
 

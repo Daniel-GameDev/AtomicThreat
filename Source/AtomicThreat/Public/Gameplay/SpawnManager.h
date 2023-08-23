@@ -110,6 +110,9 @@ protected:
 	UFUNCTION()
 	void SpawnGameGrids();
 
+	UFUNCTION()
+	void SpawnBasedOnGridType(AActor* Launcher, TSubclassOf<ARocketBase> Rocket, FVector Target);
+
 public:
 	virtual void Tick(float DeltaTime) override;
 	
