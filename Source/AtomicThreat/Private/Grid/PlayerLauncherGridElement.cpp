@@ -18,6 +18,11 @@ APlayerLauncherGridElement::APlayerLauncherGridElement()
 	LauncherCapsule->OnComponentBeginOverlap.AddDynamic(this, &APlayerLauncherGridElement::OnCapsuleBeginOverlap);
 }
 
+void APlayerLauncherGridElement::Recovery()
+{
+	RestoreLauncher();
+}
+
 void APlayerLauncherGridElement::BeginPlay()
 {
 	Super::BeginPlay();
@@ -45,13 +50,19 @@ void APlayerLauncherGridElement::SpawnAtomicPawn(APlayerController* PlayerContro
 
 void APlayerLauncherGridElement::RestoreLauncher()
 {
-	if (bDestroyed)
+	if (bDestroyed && Ammo)
 	{
 		Ammo->RefillAmmo();
 		bDestroyed = false;
 		RocketLauncherMesh->SetVisibility(true);
 		DestroyedLauncherMesh->SetVisibility(false);
 	}
+	else if (!bDestroyed && Ammo) // bug with clear ammo calling from BP, check if it will call - delete here && Ammo Check
+	{
+		Ammo->ClearAmmo();
+		Ammo->RefillAmmo();
+	}
+		
 }
 
 void APlayerLauncherGridElement::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit)
@@ -96,11 +107,26 @@ void APlayerLauncherGridElement::DestroyAmmo() //Do I need this?
 
 void APlayerLauncherGridElement::Destroyed()
 {
-	if (!bDestroyed)
+	if (!bDestroyed && Ammo)
 	{
 		Ammo->ClearAmmo();
 		bDestroyed = true;
 		RocketLauncherMesh->SetVisibility(false);
 		DestroyedLauncherMesh->SetVisibility(true);
 	}
+
+	Super::Destroyed();
+}
+
+int32 APlayerLauncherGridElement::GetPoints()
+{
+	//TArray<AActor*> AmmoActors;
+	//Ammo->GetAttachedActors(AmmoActors);
+	//return Points * AmmoActors.Num();
+
+	return Ammo->AmmoLeft() * Points;
+}
+
+void APlayerLauncherGridElement::SetPoints(int32 NewPoints)
+{
 }

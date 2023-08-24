@@ -23,6 +23,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	bool bRecoveryRequiresPoints;
 
+	UFUNCTION()
+	virtual void Recovery();
+
 protected:
 	virtual void BeginPlay() override;
 

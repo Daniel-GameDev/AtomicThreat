@@ -35,4 +35,7 @@ public:
 
 	UFUNCTION()
 	virtual void TotalRocketsLeft(bool bRocketExists) = 0;
+
+	/*UFUNCTION()
+	virtual void UpdatePlayerPoints(bool bRocketExists) = 0;*/
 };

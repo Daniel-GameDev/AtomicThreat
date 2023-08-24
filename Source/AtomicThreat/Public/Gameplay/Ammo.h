@@ -26,6 +26,10 @@ public:
 	UFUNCTION()
 	void ClearAmmo();
 
+	UFUNCTION()
+	int32 AmmoLeft();
+
+
 protected:
 	virtual void BeginPlay() override;
 

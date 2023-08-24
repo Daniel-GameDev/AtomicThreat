@@ -4,17 +4,20 @@
 
 #include "CoreMinimal.h"
 #include "Grid/GridElementBase.h"
+#include "Common/PointsInterface.h"
 #include "CityGridElement.generated.h"
 
 class UCapsuleComponent;
 
 UCLASS()
-class ATOMICTHREAT_API ACityGridElement : public AGridElementBase
+class ATOMICTHREAT_API ACityGridElement : public AGridElementBase, public IPointsInterface
 {
 	GENERATED_BODY()
 
 public:
 	ACityGridElement();
+
+	virtual void Recovery() override;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
@@ -26,6 +29,10 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UCapsuleComponent* CityCapsule;
 
+	/*UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	int32 Points;*/
+
+
 public:
 	UFUNCTION(BlueprintCallable)
 	void OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
@@ -35,4 +42,8 @@ public:
 	void RestoreCity();
 
 	virtual void Destroyed() override;
+
+	// Inherited via IPointsInterface
+	virtual int32 GetPoints() override;
+	virtual void SetPoints(int32 NewPoints) override;
 };

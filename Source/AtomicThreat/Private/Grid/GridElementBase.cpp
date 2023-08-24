@@ -14,6 +14,10 @@ AGridElementBase::AGridElementBase()
 	GridMesh->SetupAttachment(SceneRoot);
 }
 
+void AGridElementBase::Recovery()
+{
+}
+
 void AGridElementBase::BeginPlay()
 {
 	Super::BeginPlay();

@@ -9,7 +9,7 @@
 
 class ASpawnManager;
 class AGridBase;
-class AGridElementBase;
+//class AGridElementBase;
 class AAtomicPlayerController;
 
 UCLASS()
@@ -24,11 +24,26 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	int32 RocketsLeftInSpawner;
 
+	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	int32 RocketsLeftInSpawner;*/
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	int32 AmmoPoints;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	int32 CityPoints;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	int32 TotalPoints;
+
 	UFUNCTION(BlueprintCallable)
 	void BeginGame();
 
 	UFUNCTION(BlueprintCallable)
 	void StartRound();
+
+	UFUNCTION(BlueprintCallable)
+	void NextRound();
 
 	UFUNCTION()
 	virtual void AssignSpawnManager(ASpawnManager* SpawnManagerRef) override;
@@ -52,8 +67,14 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	AGridBase* CityGrid;
 
-	UPROPERTY()
-	TArray<AGridElementBase*> DestroyedElements;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	int32 DefaultCityRecoveryPrice = 10000;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	int32 CityRecoveryPrice;
+
+	//UPROPERTY()
+	//TArray<AActor*> DestroyedElements;
 
 	UPROPERTY()
 	int32 CityElementsLeft;
@@ -61,11 +82,23 @@ protected:
 	UPROPERTY()
 	int32 TotalRockets;
 
+	UPROPERTY()
+	bool bGameLost;
+
+	UPROPERTY()
+	int32 Bonus = 1;
+
 	UFUNCTION()
 	void OnCityElementDestroyed(AActor* Act);
 
 	UFUNCTION()
 	void GameLost(); //TODO: add game lost to player controller
+
+	UFUNCTION()
+	void RoundEnd();
+
+	UFUNCTION()
+	void RecoveryRandomCity();
 
 	virtual void PostLogin(APlayerController* NewPlayer) override;
 

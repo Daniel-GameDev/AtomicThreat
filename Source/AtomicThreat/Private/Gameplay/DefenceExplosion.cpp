@@ -3,6 +3,8 @@
 #include "Gameplay/DefenceExplosion.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Components/TimelineComponent.h"
+#include "Common/PointsInterface.h"
+#include "Framework/AtomicPlayerState.h"
 
 ADefenceExplosion::ADefenceExplosion()
 {
@@ -35,6 +37,13 @@ void ADefenceExplosion::TraceExplosion(float ExpSize)
 	if (UKismetSystemLibrary::SphereTraceSingleByProfile(GetWorld(), GetActorLocation(), GetActorLocation(), Size * ExpSize, FName("Explosion"),
 		false, ActorsToIgnore, EDrawDebugTrace::ForDuration, HitResult, true, FLinearColor::Red, FLinearColor::Green, 0.f))
 	{
+		int32 Points;
+		if (IPointsInterface* Interface = Cast<IPointsInterface>(HitResult.GetComponent()->GetOwner()))
+			Points = Interface->GetPoints();
+
+		if (IPointsInterface* Interface = Cast<IPointsInterface>(PlayerController->GetPlayerState<AAtomicPlayerState>()))
+			Interface->SetPoints(Points);
+
 		//TODO: HitResult check interface points - get, check controller - player state - points set
 		HitResult.GetComponent()->GetOwner()->Destroy(); // Add interface for points
 	};

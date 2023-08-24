@@ -118,10 +118,15 @@ void AAmmo::RefillAmmo() //Delete
 
 void AAmmo::ClearAmmo()
 {
-	for (UStaticMeshComponent* TRocket : Rockets) 
+	for (UStaticMeshComponent* TRocket : Rockets) // small bug here check when changing parametrs in editor
 		TRocket->DestroyComponent();
 
 	Rockets.Empty();
+}
+
+int32 AAmmo::AmmoLeft() //TODO: delete after fixing attached actros in RefillAmmo()
+{
+	return Rockets.Num();
 }
 
 void AAmmo::Tick(float DeltaTime)

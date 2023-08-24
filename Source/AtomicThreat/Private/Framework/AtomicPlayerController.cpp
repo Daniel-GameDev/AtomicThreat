@@ -3,6 +3,7 @@
 
 #include "Framework/AtomicPlayerController.h"
 #include "Blueprint/UserWidget.h"
+#include "Framework/AtomicPlayerState.h"
 
 void AAtomicPlayerController::BeginPlay()
 {
@@ -10,6 +11,7 @@ void AAtomicPlayerController::BeginPlay()
 
 	bShowMouseCursor = true;
 	CreateUserWidget(StartWidget);
+	GetPlayerState<AAtomicPlayerState>()->CurrentPlayer = this;
 }
 
 void AAtomicPlayerController::CreateUserWidget(TSubclassOf<UUserWidget> Widget)

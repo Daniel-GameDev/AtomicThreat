@@ -26,6 +26,11 @@ ACityGridElement::ACityGridElement()
 	bDestroyed = false;
 }
 
+void ACityGridElement::Recovery()
+{
+	RestoreCity();
+}
+
 void ACityGridElement::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
 	UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit)
 {
@@ -49,4 +54,13 @@ void ACityGridElement::Destroyed()
 	DefaultCityMesh->SetVisibility(false);
 	DestroyedCityMesh->SetVisibility(true);
 	Super::Destroyed();
+}
+
+int32 ACityGridElement::GetPoints()
+{
+	return Points;
+}
+
+void ACityGridElement::SetPoints(int32 NewPoints)
+{
 }
