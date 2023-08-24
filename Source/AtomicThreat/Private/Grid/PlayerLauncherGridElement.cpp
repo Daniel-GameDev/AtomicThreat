@@ -14,6 +14,7 @@ APlayerLauncherGridElement::APlayerLauncherGridElement()
 
 	LauncherCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("LauncherCapsule"));
 	LauncherCapsule->SetupAttachment(GridMesh);
+	LauncherCapsule->SetCollisionObjectType(ECC_GameTraceChannel3);
 	LauncherCapsule->OnComponentBeginOverlap.AddDynamic(this, &APlayerLauncherGridElement::OnCapsuleBeginOverlap);
 }
 
@@ -55,13 +56,7 @@ void APlayerLauncherGridElement::RestoreLauncher()
 
 void APlayerLauncherGridElement::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit)
 {
-	if (!bDestroyed)
-	{
-		Ammo->ClearAmmo();
-		bDestroyed = true;
-		RocketLauncherMesh->SetVisibility(false);
-		DestroyedLauncherMesh->SetVisibility(true);
-	}
+	Destroyed();
 }
 
 void APlayerLauncherGridElement::LaunchRocket(TSubclassOf<ARocketBase> RocketType, FVector TargetVector, float DifficultyIncrement)
@@ -97,4 +92,15 @@ void APlayerLauncherGridElement::SpawnAmmo()
 void APlayerLauncherGridElement::DestroyAmmo() //Do I need this?
 {
 	Ammo->Destroy();
+}
+
+void APlayerLauncherGridElement::Destroyed()
+{
+	if (!bDestroyed)
+	{
+		Ammo->ClearAmmo();
+		bDestroyed = true;
+		RocketLauncherMesh->SetVisibility(false);
+		DestroyedLauncherMesh->SetVisibility(true);
+	}
 }

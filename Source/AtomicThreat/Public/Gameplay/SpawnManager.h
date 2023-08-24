@@ -102,20 +102,23 @@ protected:
 	void BeginSpawn();
 
 	UFUNCTION()
-	void StartRound();
-
-	UFUNCTION()
 	bool GetRandomRocketFromRoundData(TSubclassOf<ARocketBase>& RocketClass);
-
-	UFUNCTION()
-	void SpawnGameGrids();
 
 	UFUNCTION()
 	void SpawnBasedOnGridType(AActor* Launcher, TSubclassOf<ARocketBase> Rocket, FVector Target);
 
 public:
 	virtual void Tick(float DeltaTime) override;
-	
+
+	UFUNCTION()
+	void StartRound();
+
+	UFUNCTION()
+	void SpawnGameGrids();
+
+	UFUNCTION()
+	void SetNextRound(int32 NewRound);
+
 	/*UPROPERTY() // <<< already have linkl on all attached components
 	TArray<AGridElementBase*> UpperEnemyGridElements;
 

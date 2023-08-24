@@ -16,7 +16,8 @@ ACityGridElement::ACityGridElement()
 
 	CityCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CityCapsule"));
 	CityCapsule->SetupAttachment(GridMesh);
-	CityCapsule->SetCollisionProfileName(FName("CityCollision"));
+	//CityCapsule->SetCollisionProfileName(FName("CityCollision"));
+	CityCapsule->SetCollisionObjectType(ECC_GameTraceChannel3);
 	CityCapsule->SetCapsuleHalfHeight(300.f);
 	CityCapsule->SetCapsuleRadius(300.f);
 	CityCapsule->OnComponentBeginOverlap.AddDynamic(this, &ACityGridElement::OnCapsuleBeginOverlap);
@@ -29,14 +30,10 @@ void ACityGridElement::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComp
 	UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit)
 {
 	if (!bDestroyed)
-	{
-		bDestroyed = true;
-		DefaultCityMesh->SetVisibility(false);
-		DestroyedCityMesh->SetVisibility(true);
-	}
+		Destroyed();
 }
 
-void ACityGridElement::RestoreCity()
+void ACityGridElement::RestoreCity() // additional function RestoreGridElement Common for GridElements
 {
 	if (bDestroyed)
 	{
@@ -44,4 +41,12 @@ void ACityGridElement::RestoreCity()
 		DefaultCityMesh->SetVisibility(true);
 		DestroyedCityMesh->SetVisibility(false);
 	}
+}
+
+void ACityGridElement::Destroyed()
+{
+	bDestroyed = true;
+	DefaultCityMesh->SetVisibility(false);
+	DestroyedCityMesh->SetVisibility(true);
+	Super::Destroyed();
 }

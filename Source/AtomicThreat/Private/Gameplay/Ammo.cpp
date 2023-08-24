@@ -118,10 +118,8 @@ void AAmmo::RefillAmmo() //Delete
 
 void AAmmo::ClearAmmo()
 {
-	for (UStaticMeshComponent* TRocket : Rockets)
-	{
+	for (UStaticMeshComponent* TRocket : Rockets) 
 		TRocket->DestroyComponent();
-	}
 
 	Rockets.Empty();
 }

@@ -20,6 +20,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	float Points;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	bool bRecoveryRequiresPoints;
+
 protected:
 	virtual void BeginPlay() override;
 

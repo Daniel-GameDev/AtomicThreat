@@ -33,4 +33,6 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void RestoreCity();
+
+	virtual void Destroyed() override;
 };

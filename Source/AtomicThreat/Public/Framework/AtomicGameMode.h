@@ -4,14 +4,57 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "Common/AtomicGameModeInterface.h" //<<< Delete?
 #include "AtomicGameMode.generated.h"
 
-/**
- * 
- */
+class ASpawnManager;
+class AGridBase;
+class AGridElementBase;
+class AAtomicPlayerController;
+
 UCLASS()
-class ATOMICTHREAT_API AAtomicGameMode : public AGameModeBase
+class ATOMICTHREAT_API AAtomicGameMode : public AGameModeBase, public IAtomicGameModeInterface
 {
 	GENERATED_BODY()
 	
+public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	int32 Round;
+
+	UFUNCTION(BlueprintCallable)
+	void BeginGame();
+
+	UFUNCTION(BlueprintCallable)
+	void StartRound();
+
+	UFUNCTION()
+	virtual void AssignSpawnManager(ASpawnManager* SpawnManagerRef) override;
+
+	UFUNCTION()
+	virtual void AssignCityGrid(AGridBase* CityGridRef) override;
+
+protected:
+	UPROPERTY()
+	AAtomicPlayerController* MainPlayer;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	ASpawnManager* SpawnManager;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	AGridBase* CityGrid;
+
+	UPROPERTY()
+	TArray<AGridElementBase*> DestroyedElements;
+
+	UPROPERTY()
+	int32 CityElementsLeft;
+
+	UFUNCTION()
+	void OnCityElementDestroyed(AActor* Act);
+
+	UFUNCTION()
+	void GameLost(); //TODO: add game lost to player controller
+
+	virtual void PostLogin(APlayerController* NewPlayer) override;
+
 };

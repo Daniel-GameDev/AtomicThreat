@@ -55,6 +55,8 @@ public:
 	UFUNCTION()
 	void DestroyAmmo();
 
+	virtual void Destroyed() override;
+
 private:
 	UPROPERTY()
 	AAmmo* Ammo;

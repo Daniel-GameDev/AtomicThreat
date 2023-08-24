@@ -9,6 +9,10 @@
 #include "Gameplay/Rockets/RocketBase.h"
 //#include "Kismet/KismetArrayLibrary.h"
 #include "Grid/LauncherBaseGridElement.h"
+#include "Kismet/GameplayStatics.h"
+//#include "Framework/AtomicGameMode.h"
+#include "GameFramework/GameModeBase.h"
+#include "Common/AtomicGameModeInterface.h"
 
 ASpawnManager::ASpawnManager()
 {
@@ -22,6 +26,28 @@ void ASpawnManager::BeginPlay()
 {
 	Super::BeginPlay();
 
+	//UObject* AtomicGameMode = GetWorld()->GetAuthGameMode();
+	
+
+	if (GetWorld())
+	{
+		if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
+		{
+			Interface->AssignSpawnManager(this);
+		}
+		//AAtomicGameMode* AtomicGameMode = Cast<AAtomicGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+		//AtomicGameMode->AssignSpawnManager(this, CityGrid);
+		//AGameModeBase* AtomicGameMode = Cast<AGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
+		//AtomicGameMode->
+		//GameMode.
+		//Cast<IAtomicGameModeInterface>(UGameplayStatics::GetGameMode(GetWorld())->AssignGameElements())
+		
+		//IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(UGameplayStatics::GetGameMode(GetWorld()));
+		//Interface->AssignGameElements(this);
+		//Cast<IAtomicGameModeInterface>(UGameplayStatics::GetGameMode(GetWorld()))->AssignGameElements(this);
+		//IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(AtomicGameMode);
+	}
+	
 	/*if (GetWorld())
 	{
 		SpawnGameGrids();
@@ -197,6 +223,16 @@ void ASpawnManager::SpawnGameGrids()
 		for (AActor* TActor : TempActors)
 			CityTargets.Add(TActor->GetRootComponent()->GetComponentLocation());
 	}
+
+	if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
+	{
+		Interface->AssignCityGrid(CityGrid);
+	}
+}
+
+void ASpawnManager::SetNextRound(int32 NewRound)
+{
+	Round = NewRound;
 }
 
 void ASpawnManager::Tick(float DeltaTime)
