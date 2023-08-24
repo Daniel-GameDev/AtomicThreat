@@ -59,12 +59,12 @@ void APlayerLauncherGridElement::OnCapsuleBeginOverlap(UPrimitiveComponent* Over
 	Destroyed();
 }
 
-void APlayerLauncherGridElement::LaunchRocket(TSubclassOf<ARocketBase> RocketType, FVector TargetVector, float DifficultyIncrement)
+void APlayerLauncherGridElement::LaunchRocket(TSubclassOf<ARocketBase> RocketType, FVector TargetVector, float DifficultyIncrement, APlayerController* PlayerController)
 {
 	//AAmmo* AmmoToUse = Cast<AAmmo>(AmmoClass);
 	if (Ammo->UseAmmo())
 	{
-		Super::LaunchRocket(RocketType, TargetVector, DifficultyIncrement);
+		Super::LaunchRocket(RocketType, TargetVector, DifficultyIncrement, PlayerController);
 	}
 	else
 	{

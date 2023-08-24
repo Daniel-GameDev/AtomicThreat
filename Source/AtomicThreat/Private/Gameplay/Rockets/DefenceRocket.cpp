@@ -13,5 +13,6 @@ void ADefenceRocket::Destroyed()
 void ADefenceRocket::SpawnExplosion()
 {
 	FActorSpawnParameters SpawnParams;
-	GetWorld()->SpawnActor<ADefenceExplosion>(Explosion, TargetVector, FRotator(), SpawnParams);
+	ADefenceExplosion* DefenceExp = GetWorld()->SpawnActor<ADefenceExplosion>(Explosion, TargetVector, FRotator(), SpawnParams);
+	DefenceExp->PlayerController = PlayerController;
 }

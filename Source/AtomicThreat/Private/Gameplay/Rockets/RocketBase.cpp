@@ -8,6 +8,8 @@
 #include "Gameplay/TargetBase.h"
 #include "DrawDebugHelpers.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Common/AtomicGameModeInterface.h"
+#include "GameFramework/GameModeBase.h"
 
 ARocketBase::ARocketBase()
 {
@@ -41,6 +43,9 @@ void ARocketBase::BeginPlay()
 
 	if (GetWorld())
 	{
+		if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
+			Interface->TotalRocketsLeft(true);
+
 		SetProjectileSettings();
 
 		StartPoint = PreviousPoint = GetActorLocation();
@@ -112,6 +117,9 @@ void ARocketBase::Destroyed()
 	//TODO: Rocket Notify Func - destroyed
 	if (TargetSceneRoot)
 		TargetSceneRoot->GetOwner()->Destroy();
+
+	if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
+		Interface->TotalRocketsLeft(false);
 	
 	Super::Destroyed();
 }

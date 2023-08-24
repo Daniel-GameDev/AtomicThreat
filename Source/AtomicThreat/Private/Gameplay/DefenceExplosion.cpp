@@ -35,6 +35,7 @@ void ADefenceExplosion::TraceExplosion(float ExpSize)
 	if (UKismetSystemLibrary::SphereTraceSingleByProfile(GetWorld(), GetActorLocation(), GetActorLocation(), Size * ExpSize, FName("Explosion"),
 		false, ActorsToIgnore, EDrawDebugTrace::ForDuration, HitResult, true, FLinearColor::Red, FLinearColor::Green, 0.f))
 	{
+		//TODO: HitResult check interface points - get, check controller - player state - points set
 		HitResult.GetComponent()->GetOwner()->Destroy(); // Add interface for points
 	};
 	

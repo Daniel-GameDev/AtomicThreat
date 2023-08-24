@@ -14,7 +14,7 @@ ALauncherBaseGridElement::ALauncherBaseGridElement()
 	LaunchPoint->SetupAttachment(GetRootComponent());
 }
 
-void ALauncherBaseGridElement::LaunchRocket(TSubclassOf<ARocketBase> RocketType, FVector TargetVector, float DifficultyIncrement)
+void ALauncherBaseGridElement::LaunchRocket(TSubclassOf<ARocketBase> RocketType, FVector TargetVector, float DifficultyIncrement, APlayerController* PlayerController)
 {
 	if (GetWorld())
 	{
@@ -25,6 +25,7 @@ void ALauncherBaseGridElement::LaunchRocket(TSubclassOf<ARocketBase> RocketType,
 		{
 			RocketBase->TargetVector = TargetVector;
 			RocketBase->DifficultyIncrement = DifficultyIncrement;
+			RocketBase->PlayerController = PlayerController;
 		}
 
 		UGameplayStatics::FinishSpawningActor(RocketActor, FTransform(Location));

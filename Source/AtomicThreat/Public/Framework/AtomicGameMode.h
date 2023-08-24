@@ -21,6 +21,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	int32 Round;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	int32 RocketsLeftInSpawner;
+
 	UFUNCTION(BlueprintCallable)
 	void BeginGame();
 
@@ -32,6 +35,12 @@ public:
 
 	UFUNCTION()
 	virtual void AssignCityGrid(AGridBase* CityGridRef) override;
+
+	UFUNCTION()
+	virtual void SpawnerRocketsLeft(int32 RocketLeft) override;
+
+	UFUNCTION()
+	virtual void TotalRocketsLeft(bool bRocketExists) override;
 
 protected:
 	UPROPERTY()
@@ -48,6 +57,9 @@ protected:
 
 	UPROPERTY()
 	int32 CityElementsLeft;
+
+	UPROPERTY()
+	int32 TotalRockets;
 
 	UFUNCTION()
 	void OnCityElementDestroyed(AActor* Act);

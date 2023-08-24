@@ -28,7 +28,7 @@ void AAtomicPawn::Launch()
 		{
 			if (Rocket)
 			{
-				PlayerLauncherGridElement->LaunchRocket(Rocket, HitResult.Location, 1.f); //TODO: Difficulty Increment - create Property for pawn
+				PlayerLauncherGridElement->LaunchRocket(Rocket, HitResult.Location, 1.f, AtomicPlayerController); //TODO: Difficulty Increment - create Property for pawn
 			}
 		}
 	}

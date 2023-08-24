@@ -62,3 +62,16 @@ void AAtomicGameMode::PostLogin(APlayerController* NewPlayer)
 {
 	MainPlayer = Cast<AAtomicPlayerController>(NewPlayer);
 }
+
+void AAtomicGameMode::SpawnerRocketsLeft(int32 RocketsLeft)
+{
+	RocketsLeftInSpawner = RocketsLeft;
+}
+
+void AAtomicGameMode::TotalRocketsLeft(bool bRocketExists)
+{
+	if (bRocketExists)
+		TotalRockets++;
+	else
+		TotalRockets--;
+}

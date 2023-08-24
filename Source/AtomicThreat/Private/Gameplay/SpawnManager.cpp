@@ -32,9 +32,7 @@ void ASpawnManager::BeginPlay()
 	if (GetWorld())
 	{
 		if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
-		{
 			Interface->AssignSpawnManager(this);
-		}
 		//AAtomicGameMode* AtomicGameMode = Cast<AAtomicGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
 		//AtomicGameMode->AssignSpawnManager(this, CityGrid);
 		//AGameModeBase* AtomicGameMode = Cast<AGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
@@ -70,6 +68,9 @@ void ASpawnManager::GetRoundData()
 	SpawnTimeArray = GetSpawnTime(RocketsLeft);
 	RocketsToSpawn = DifficultyValueStruct->RocketTypes;
 	DifficultyIncrement = DifficultyValueStruct->DifficultyIncrement;
+
+	if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
+		Interface->SpawnerRocketsLeft(RocketsLeft);
 }
 
 TArray<float> ASpawnManager::GetSpawnTime(int32 RocketAmount)
@@ -162,6 +163,9 @@ void ASpawnManager::BeginSpawn()
 	if (bRocketSpawned)
 	{
 		RocketsLeft--;//move 1
+		if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
+			Interface->SpawnerRocketsLeft(RocketsLeft);
+
 		if (!SpawnTimeArray.IsValidIndex(0))
 			GetWorldTimerManager().ClearTimer(SpawnDelayTimerHandle);
 	}

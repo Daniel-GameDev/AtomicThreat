@@ -11,6 +11,15 @@ void AMultiEnemyRocket::BeginPlay()
 	GetWorld()->GetTimerManager().SetTimer(DecayTimerHandle, this, &AMultiEnemyRocket::BeginDecay, DecayTime, false);
 }
 
+int32 AMultiEnemyRocket::GetPoints()
+{
+	return Points;
+}
+
+void AMultiEnemyRocket::SetPoints(int32 NewPoints)
+{
+}
+
 void AMultiEnemyRocket::BeginDecay()
 {
 	SpawnRockets(true);

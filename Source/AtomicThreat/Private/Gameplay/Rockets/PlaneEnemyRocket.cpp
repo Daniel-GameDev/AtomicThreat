@@ -14,3 +14,12 @@ void APlaneEnemyRocket::BeginDecay()
 	SpawnRockets(false);
 	AttachedRocketMesh->DestroyComponent();
 }
+
+int32 APlaneEnemyRocket::GetPoints()
+{
+	return Points;
+}
+
+void APlaneEnemyRocket::SetPoints(int32 NewPoints)
+{
+}

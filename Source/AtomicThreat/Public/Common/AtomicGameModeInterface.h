@@ -29,4 +29,10 @@ public:
 
 	UFUNCTION()
 	virtual void AssignCityGrid(AGridBase* CityGridRef) = 0;
+
+	UFUNCTION()
+	virtual void SpawnerRocketsLeft(int32 RocketsLeft) = 0;
+
+	UFUNCTION()
+	virtual void TotalRocketsLeft(bool bRocketExists) = 0;
 };

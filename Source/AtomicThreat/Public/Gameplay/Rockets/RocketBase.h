@@ -34,6 +34,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = RocketSettings)
 	TArray<FVector> TargetVectors;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	APlayerController* PlayerController;
+
 protected:
 	virtual void BeginPlay() override;
 
