@@ -7,7 +7,6 @@
 #include "Ammo.generated.h"
 
 class UArrowComponent;
-class ARocketMeshActor; // < delete
 
 UCLASS()
 class ATOMICTHREAT_API AAmmo : public AActor
@@ -62,9 +61,5 @@ protected:
 
 public:
 	virtual void Tick(float DeltaTime) override;
-
-/*private:
-	UPROPERTY()
-	int32 AmmoLeft;*/
 
 };

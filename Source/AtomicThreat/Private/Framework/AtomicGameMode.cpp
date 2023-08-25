@@ -34,8 +34,6 @@ void AAtomicGameMode::NextRound()
 		Interface->SetPoints(CityPoints / Bonus + AmmoPoints / Bonus);
 
 	CityPoints = AmmoPoints = TotalPoints = 0;
-	//AmmoPoints = 0;
-	//TotalPoints = 0;
 	
 	Round++;
 	SpawnManager->SetNextRound(Round);
@@ -57,7 +55,6 @@ void AAtomicGameMode::AssignSpawnManager(ASpawnManager* SpawnManagerRef)
 void AAtomicGameMode::AssignCityGrid(AGridBase* CityGridRef)
 {
 	CityGrid = CityGridRef;
-
 	TArray<AActor*> CityGridActors;
 	CityGrid->GetAttachedActors(CityGridActors);
 
@@ -68,12 +65,10 @@ void AAtomicGameMode::AssignCityGrid(AGridBase* CityGridRef)
 		if (Cast<AGridElementBase>(CityGridActors[i])->bRecoveryRequiresPoints)
 			CityElementsLeft++;
 	}
-	//Actors[0]->OnDestroyed.AddDynamic(this, &AAtomicGameMode::MyDestroyed);
 }
 
 void AAtomicGameMode::OnCityElementDestroyed(AActor* DestroyedActorElement)
 {
-	//DestroyedElements.Add(DestroyedActorElement);
 	if (Cast<AGridElementBase>(DestroyedActorElement)->bRecoveryRequiresPoints)
 		CityElementsLeft--;
 
@@ -94,13 +89,13 @@ void AAtomicGameMode::PostLogin(APlayerController* NewPlayer)
 
 void AAtomicGameMode::RoundEnd()
 {
-	AGridElementBase* Element;
-
 	int32 PointsFromPlayer;
+	AGridElementBase* Element;
+	TArray<AActor*> CityElements;
+
 	if (IPointsInterface* Interface = Cast<IPointsInterface>(MainPlayer->PlayerState))
 		PointsFromPlayer = Interface->GetPoints();
 
-	TArray<AActor*> CityElements;
 	CityGrid->GetAttachedActors(CityElements);
 
 	for (int32 i = 0; i < CityElements.Num(); i++)
@@ -119,12 +114,9 @@ void AAtomicGameMode::RoundEnd()
 					AmmoPoints += Interface->GetPoints() * Bonus;;
 			}
 		}
-		/*if (!Element->bRecoveryRequiresPoints) // !!! ???
-				Element->Recovery();*/
 	}
 
 	TotalPoints = CityPoints + AmmoPoints + PointsFromPlayer;
-
 	MainPlayer->CreateUserWidget(MainPlayer->ScoreResultWidget);
 }
 
@@ -144,42 +136,7 @@ void AAtomicGameMode::CityRecovery()
 		else if (!Element->bRecoveryRequiresPoints)
 			Element->Recovery();
 	}
-
-	/*for (AActor* TActor : CityElements)
-	{
-		Element = Cast<AGridElementBase>(TActor);
-		if (Element->bRecoveryRequiresPoints)
-		{
-			if (!Element->bDestroyed)
-			{
-				CityElements.Remove(Element);
-			}
-		}
-		else
-		{
-			Element->Recovery();
-			CityElements.Remove(Element);
-		}
-	}
-	*/
 	
-
-
-		/*if (Element->bDestroyed)
-		{
-			if (Element->bRecoveryRequiresPoints)
-				CityElements.RemoveAt(i);
-			else
-				Element->Recovery(); //TODO: create separate function ??
-		}*/
-		/*else if (!Element->bRecoveryRequiresPoints)
-		{
-			Element->Recovery();
-		}*/
-		/*if (!Element->bRecoveryRequiresPoints) // !!! ???
-				Element->Recovery();*/
-	
-
 	if (TotalPoints >= CityRecoveryPrice && DestroyedElements.IsValidIndex(0))
 	{
 		int32 RandElement = FMath::RandRange(0, DestroyedElements.Num() - 1);

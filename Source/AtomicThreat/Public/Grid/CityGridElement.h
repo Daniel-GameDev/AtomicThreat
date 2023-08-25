@@ -29,14 +29,10 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UCapsuleComponent* CityCapsule;
 
-	/*UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	int32 Points;*/
-
 
 public:
 	UFUNCTION(BlueprintCallable)
-	void OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
-		UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit);
+	void OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit);
 
 	UFUNCTION(BlueprintCallable)
 	void RestoreCity();

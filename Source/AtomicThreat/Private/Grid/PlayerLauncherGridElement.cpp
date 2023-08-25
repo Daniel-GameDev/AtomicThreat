@@ -57,7 +57,7 @@ void APlayerLauncherGridElement::RestoreLauncher()
 		RocketLauncherMesh->SetVisibility(true);
 		DestroyedLauncherMesh->SetVisibility(false);
 	}
-	else if (!bDestroyed && Ammo) // bug with clear ammo calling from BP, check if it will call - delete here && Ammo Check
+	else if (!bDestroyed && Ammo)
 	{
 		Ammo->ClearAmmo();
 		Ammo->RefillAmmo();
@@ -72,14 +72,9 @@ void APlayerLauncherGridElement::OnCapsuleBeginOverlap(UPrimitiveComponent* Over
 
 void APlayerLauncherGridElement::LaunchRocket(TSubclassOf<ARocketBase> RocketType, FVector TargetVector, float DifficultyIncrement, APlayerController* PlayerController)
 {
-	//AAmmo* AmmoToUse = Cast<AAmmo>(AmmoClass);
 	if (Ammo->UseAmmo())
 	{
 		Super::LaunchRocket(RocketType, TargetVector, DifficultyIncrement, PlayerController);
-	}
-	else
-	{
-		//TODO: Empty
 	}
 
 }
@@ -100,11 +95,6 @@ void APlayerLauncherGridElement::SpawnAmmo()
 	
 }
 
-void APlayerLauncherGridElement::DestroyAmmo() //Do I need this?
-{
-	Ammo->Destroy();
-}
-
 void APlayerLauncherGridElement::Destroyed()
 {
 	if (!bDestroyed && Ammo)
@@ -120,10 +110,6 @@ void APlayerLauncherGridElement::Destroyed()
 
 int32 APlayerLauncherGridElement::GetPoints()
 {
-	//TArray<AActor*> AmmoActors;
-	//Ammo->GetAttachedActors(AmmoActors);
-	//return Points * AmmoActors.Num();
-
 	return Ammo->AmmoLeft() * Points;
 }
 

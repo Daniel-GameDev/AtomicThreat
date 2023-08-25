@@ -21,9 +21,6 @@ public:
 
 	APlayerLauncherGridElement();
 
-	//UPROPERTY()
-	//int32 Points;
-
 	virtual void Recovery() override;
 
 protected:
@@ -49,17 +46,13 @@ protected:
 	void RestoreLauncher();
 
 	UFUNCTION(BlueprintCallable)
-		void OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-			UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit);
+	void OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit);
 
 public:
 	virtual void LaunchRocket(TSubclassOf<ARocketBase> RocketType, FVector TargetVector, float DifficultyIncrement, APlayerController* PlayerController = nullptr) override;
 
 	UFUNCTION()
 	void SpawnAmmo();
-
-	UFUNCTION()
-	void DestroyAmmo();
 
 	virtual void Destroyed() override;
 

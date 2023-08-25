@@ -15,6 +15,8 @@ ARocketBase::ARocketBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+	//LoadConfig();
+
 	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("RocketSceneRoot"));
 	SetRootComponent(SceneRoot);
 
@@ -28,13 +30,15 @@ ARocketBase::ARocketBase()
 	RocketCapsule->SetupAttachment(RocketMesh);
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
-	ProjectileMovement->InitialSpeed = this->InitialSpeed * DifficultyIncrement;
-	ProjectileMovement->MaxSpeed = this->MaxSpeed * DifficultyIncrement;
-	ProjectileMovement->HomingAccelerationMagnitude = this->HomingAccelerationMagnitude;
-	ProjectileMovement->bRotationFollowsVelocity = true;
-	ProjectileMovement->ProjectileGravityScale = 0.f;
-	ProjectileMovement->bIsHomingProjectile = true;
-
+	//ProjectileMovement->InitialSpeed = this->InitialSpeed * DifficultyIncrement;
+	//ProjectileMovement->MaxSpeed = this->MaxSpeed * DifficultyIncrement;
+	//ProjectileMovement->HomingAccelerationMagnitude = this->HomingAccelerationMagnitude;
+	//ProjectileMovement->bRotationFollowsVelocity = true;
+	//ProjectileMovement->ProjectileGravityScale = 0.f;
+	//ProjectileMovement->bIsHomingProjectile = true;
+	//ProjectileMovement->InitialSpeed = this->InitialSpeed;
+	//ProjectileMovement->MaxSpeed = this->MaxSpeed;
+	//ProjectileMovement->HomingAccelerationMagnitude = this->HomingAccelerationMagnitude;
 }
 
 void ARocketBase::BeginPlay()
@@ -47,11 +51,8 @@ void ARocketBase::BeginPlay()
 			Interface->TotalRocketsLeft(true);
 
 		SetProjectileSettings();
-
 		StartPoint = PreviousPoint = GetActorLocation();
-		//PreviousPoint = GetActorLocation();
-
-		CreateTarget(); //TODO: Rocket Notife Func for creation / destroy
+		CreateTarget();
 	}
 }
 
@@ -91,6 +92,9 @@ void ARocketBase::TargetHit()
 
 void ARocketBase::SetProjectileSettings()
 {
+	ProjectileMovement->bRotationFollowsVelocity = true;
+	ProjectileMovement->ProjectileGravityScale = 0.f;
+	ProjectileMovement->bIsHomingProjectile = true;
 	ProjectileMovement->InitialSpeed = this->InitialSpeed * DifficultyIncrement;
 	ProjectileMovement->MaxSpeed = this->MaxSpeed * DifficultyIncrement;
 	ProjectileMovement->HomingAccelerationMagnitude = this->HomingAccelerationMagnitude;
@@ -114,7 +118,6 @@ void ARocketBase::Tick(float DeltaTime)
 
 void ARocketBase::Destroyed()
 {
-	//TODO: Rocket Notify Func - destroyed
 	if (TargetSceneRoot)
 		TargetSceneRoot->GetOwner()->Destroy();
 

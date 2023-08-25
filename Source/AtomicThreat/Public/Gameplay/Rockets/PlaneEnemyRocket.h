@@ -4,12 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Gameplay/Rockets/MultiEnemyRocket.h"
-//#include "Common/PointsInterface.h"
 #include "PlaneEnemyRocket.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class ATOMICTHREAT_API APlaneEnemyRocket : public AMultiEnemyRocket
 {
@@ -23,10 +19,6 @@ protected:
 	UStaticMeshComponent* AttachedRocketMesh;
 
 	virtual void BeginDecay() override;
-
-/*protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	int32 Points;*/
 
 public:
 	// Inherited via IPointsInterface

@@ -4,12 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "Common/AtomicGameModeInterface.h" //<<< Delete?
+#include "Common/AtomicGameModeInterface.h"
 #include "AtomicGameMode.generated.h"
 
 class ASpawnManager;
 class AGridBase;
-//class AGridElementBase;
 class AAtomicPlayerController;
 
 UCLASS()
@@ -23,9 +22,6 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	int32 RocketsLeftInSpawner;
-
-	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	int32 RocketsLeftInSpawner;*/
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	int32 AmmoPoints;
@@ -73,9 +69,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	int32 CityRecoveryPrice;
 
-	//UPROPERTY()
-	//TArray<AActor*> DestroyedElements;
-
 	UPROPERTY()
 	int32 CityElementsLeft;
 
@@ -92,7 +85,7 @@ protected:
 	void OnCityElementDestroyed(AActor* Act);
 
 	UFUNCTION()
-	void GameLost(); //TODO: add game lost to player controller
+	void GameLost();
 
 	UFUNCTION()
 	void RoundEnd();

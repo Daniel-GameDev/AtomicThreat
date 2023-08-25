@@ -11,24 +11,7 @@
 class AGridBase;
 class AGridElementBase;
 class ARocketBase;
-//class FRocketStruct;
 class UDataTable;
-
-/*USTRUCT(BlueprintType)
-struct FDifficultyData
-{
-	GENERATED_USTRUCT_BODY()
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 TotalRockets;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float DifficultyIncrement;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TArray<FRocketStruct> RocketsToSpawn;
-
-};*/
 
 UCLASS()
 class ATOMICTHREAT_API ASpawnManager : public AActor
@@ -118,14 +101,5 @@ public:
 
 	UFUNCTION()
 	void SetNextRound(int32 NewRound);
-
-	/*UPROPERTY() // <<< already have linkl on all attached components
-	TArray<AGridElementBase*> UpperEnemyGridElements;
-
-	UPROPERTY()
-	TArray<AGridElementBase*> RightEnemyGridElements;
-
-	UPROPERTY()
-	TArray<AGridElementBase*> LeftEnemyGridElements;*/
 
 };

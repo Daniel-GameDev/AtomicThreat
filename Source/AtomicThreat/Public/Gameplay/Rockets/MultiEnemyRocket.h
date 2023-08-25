@@ -7,9 +7,6 @@
 #include "Common/PointsInterface.h"
 #include "MultiEnemyRocket.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class ATOMICTHREAT_API AMultiEnemyRocket : public ARocketBase, public IPointsInterface
 {

@@ -16,7 +16,6 @@ ACityGridElement::ACityGridElement()
 
 	CityCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CityCapsule"));
 	CityCapsule->SetupAttachment(GridMesh);
-	//CityCapsule->SetCollisionProfileName(FName("CityCollision"));
 	CityCapsule->SetCollisionObjectType(ECC_GameTraceChannel3);
 	CityCapsule->SetCapsuleHalfHeight(300.f);
 	CityCapsule->SetCapsuleRadius(300.f);
@@ -38,7 +37,7 @@ void ACityGridElement::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComp
 		Destroyed();
 }
 
-void ACityGridElement::RestoreCity() // additional function RestoreGridElement Common for GridElements
+void ACityGridElement::RestoreCity()
 {
 	if (bDestroyed)
 	{

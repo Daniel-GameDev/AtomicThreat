@@ -49,9 +49,7 @@ void AMultiEnemyRocket::SpawnRockets(bool bDestroyAfterSpawn)
 			UGameplayStatics::FinishSpawningActor(RocketActor, FTransform(GetActorLocation()));
 		}
 		if (bDestroyAfterSpawn)
-		{
 			Destroy();
-		}
 		
 	}
 }

@@ -56,19 +56,19 @@ protected:
 	UProjectileMovementComponent* ProjectileMovement;
 
 	UPROPERTY(Config, EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
-	float InitialSpeed = 4000.f;
+	float InitialSpeed ; //= 4000.f
 
 	UPROPERTY(Config, EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
-	float MaxSpeed = 4000.f;
+	float MaxSpeed ; //= 4000.f
 
 	UPROPERTY(Config, EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
-	float RotationSpeed = 100.f;
+	float RotationSpeed ; //= 100.f
 
 	UPROPERTY(Config, EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
-	float ToleranceTargetCoordinate = 400.f;
+	float ToleranceTargetCoordinate ; //= 400.f
 
 	UPROPERTY(Config, EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
-	float HomingAccelerationMagnitude = 16000.f;
+	float HomingAccelerationMagnitude ; //= 16000.f
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Target)
 	TSubclassOf<ATargetBase> Target;

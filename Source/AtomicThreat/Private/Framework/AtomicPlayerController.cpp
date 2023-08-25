@@ -18,6 +18,7 @@ void AAtomicPlayerController::CreateUserWidget(TSubclassOf<UUserWidget> Widget)
 {
 	FInputModeUIOnly InputMode;
 	SetInputMode(InputMode);
+
 	if (Widget)
 	{
 		UUserWidget* WidgetToCreate = CreateWidget<UUserWidget>(GetWorld(), Widget);

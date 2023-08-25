@@ -7,10 +7,8 @@
 #include "Common/DifficultyValueStructure.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Gameplay/Rockets/RocketBase.h"
-//#include "Kismet/KismetArrayLibrary.h"
 #include "Grid/LauncherBaseGridElement.h"
 #include "Kismet/GameplayStatics.h"
-//#include "Framework/AtomicGameMode.h"
 #include "GameFramework/GameModeBase.h"
 #include "Common/AtomicGameModeInterface.h"
 
@@ -25,36 +23,12 @@ ASpawnManager::ASpawnManager()
 void ASpawnManager::BeginPlay()
 {
 	Super::BeginPlay();
-
-	//UObject* AtomicGameMode = GetWorld()->GetAuthGameMode();
 	
-
 	if (GetWorld())
 	{
 		if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
 			Interface->AssignSpawnManager(this);
-		//AAtomicGameMode* AtomicGameMode = Cast<AAtomicGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
-		//AtomicGameMode->AssignSpawnManager(this, CityGrid);
-		//AGameModeBase* AtomicGameMode = Cast<AGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
-		//AtomicGameMode->
-		//GameMode.
-		//Cast<IAtomicGameModeInterface>(UGameplayStatics::GetGameMode(GetWorld())->AssignGameElements())
-		
-		//IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(UGameplayStatics::GetGameMode(GetWorld()));
-		//Interface->AssignGameElements(this);
-		//Cast<IAtomicGameModeInterface>(UGameplayStatics::GetGameMode(GetWorld()))->AssignGameElements(this);
-		//IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(AtomicGameMode);
 	}
-	
-	/*if (GetWorld())
-	{
-		SpawnGameGrids();
-
-		if (true)
-		{
-			StartRound();
-		}
-	}*/
 }
 
 void ASpawnManager::GetRoundData()
@@ -78,9 +52,7 @@ TArray<float> ASpawnManager::GetSpawnTime(int32 RocketAmount)
 	TArray<float> Time;
 
 	for (size_t i = 0; i < RocketAmount; i++)
-	{
 		Time.Add(UKismetMathLibrary::RandomFloatInRange(SpawnTimeMin, SpawnTimeMax));
-	}
 
 	return Time;
 }
@@ -97,8 +69,6 @@ void ASpawnManager::BeginSpawn()
 			SpawnTimeArray.RemoveSingle(TTime);
 			if (GetRandomRocketFromRoundData(RocketToLaunch))
 			{
-				//TSubclassOf<ARocketBase> Rocket = RocketToLaunch;
-				//Rocket.GetDefaultObject()->bSideLaunch;
 				if (RocketToLaunch.GetDefaultObject()->bSideLaunch)
 				{
 					TArray<AActor*> LauncherArray;
@@ -113,12 +83,9 @@ void ASpawnManager::BeginSpawn()
 						RightEnemyGrid->GetAttachedActors(TargetsArray);
 						LeftEnemyGrid->GetAttachedActors(LauncherArray);
 					}
-					//TODO: Side Launch
-					
-					//UpperEnemyGrid->GetAttachedActors(ElementsArray);
+
 					int32 RandLauncherIndex = FMath::RandRange(0, LauncherArray.Num() - 1);
-					int32 RandTargetIndex = FMath::RandRange(0, TargetsArray.Num() - 1);//change with given array
-					//ElementsArray[RandElementIndex];
+					int32 RandTargetIndex = FMath::RandRange(0, TargetsArray.Num() - 1);
 
 					SpawnBasedOnGridType(LauncherArray[RandLauncherIndex], RocketToLaunch, TargetsArray[RandTargetIndex]->GetRootComponent()->GetComponentLocation());
 					bRocketSpawned = true;
@@ -130,26 +97,11 @@ void ASpawnManager::BeginSpawn()
 					TArray<AActor*> ElementsArray;
 					UpperEnemyGrid->GetAttachedActors(ElementsArray);
 					int32 RandElementIndex = FMath::RandRange(0, ElementsArray.Num() - 1);
-					int32 RandTargetIndex = FMath::RandRange(0, CityTargets.Num() - 1);//change with given array
-					//ElementsArray[RandElementIndex];
+					int32 RandTargetIndex = FMath::RandRange(0, CityTargets.Num() - 1);
 
 					SpawnBasedOnGridType(ElementsArray[RandElementIndex], RocketToLaunch, CityTargets[RandTargetIndex]);
 					bRocketSpawned = true;
 					break;
-
-					/*if (RocketToLaunch.GetDefaultObject()->bMultiRocket)
-					{
-						
-						Cast<ALauncherBaseGridElement>(ElementsArray[RandElementIndex])->LaunchMultiRocket(RocketToLaunch, CityTargets[RandTargetIndex], CityTargets, DifficultyIncrement);
-						bRocketSpawned = true;
-						break;
-					}
-					else
-					{
-						Cast<ALauncherBaseGridElement>(ElementsArray[RandElementIndex])->LaunchRocket(RocketToLaunch, CityTargets[RandTargetIndex], DifficultyIncrement);
-						bRocketSpawned = true;
-						break;
-					}*/
 				}
 			}
 			else
@@ -162,7 +114,7 @@ void ASpawnManager::BeginSpawn()
 
 	if (bRocketSpawned)
 	{
-		RocketsLeft--;//move 1
+		RocketsLeft--;
 		if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
 			Interface->SpawnerRocketsLeft(RocketsLeft);
 
@@ -170,29 +122,21 @@ void ASpawnManager::BeginSpawn()
 			GetWorldTimerManager().ClearTimer(SpawnDelayTimerHandle);
 	}
 	else
-	{
 		TimerValue = UKismetMathLibrary::FClamp(TimerValue + SpawnerLoopFrequencyTime, SpawnTimeMin, SpawnTimeMax);
-		//bRocketSpawned = false;
-	}
 }
 
 void ASpawnManager::SpawnBasedOnGridType(AActor* Launcher, TSubclassOf<ARocketBase> Rocket, FVector Target)
 {
 	if (Rocket.GetDefaultObject()->bMultiRocket)
-	{
 		Cast<ALauncherBaseGridElement>(Launcher)->LaunchMultiRocket(Rocket, Target, CityTargets, DifficultyIncrement);
-	}
 	else
-	{
 		Cast<ALauncherBaseGridElement>(Launcher)->LaunchRocket(Rocket, Target, DifficultyIncrement);
-	}
 
 }
 
 void ASpawnManager::StartRound()
 {
 	GetRoundData();
-	//GetWorld()->GetTimerManager().SetTimer(SpawnDelayTimerHandle,  &ASpawnManager::BeginSpawn, SpawnerLoopFrequencyTime, true);
 	GetWorld()->GetTimerManager().SetTimer(SpawnDelayTimerHandle, this, &ASpawnManager::BeginSpawn, SpawnerLoopFrequencyTime, true);
 }
 
@@ -229,9 +173,7 @@ void ASpawnManager::SpawnGameGrids()
 	}
 
 	if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
-	{
 		Interface->AssignCityGrid(CityGrid);
-	}
 }
 
 void ASpawnManager::SetNextRound(int32 NewRound)

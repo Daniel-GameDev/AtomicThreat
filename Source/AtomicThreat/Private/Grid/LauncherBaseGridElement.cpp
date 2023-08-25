@@ -44,6 +44,7 @@ void ALauncherBaseGridElement::LaunchMultiRocket(TSubclassOf<ARocketBase> Rocket
 			RocketBase->TargetVector = TargetVector;
 			RocketBase->DifficultyIncrement = DifficultyIncrement;
 			RocketBase->TargetVectors = TargetVectors;
+			//RocketBase->SetProjectileSettings();
 		}
 
 		UGameplayStatics::FinishSpawningActor(RocketActor, FTransform(Location));

@@ -20,10 +20,6 @@ class ATOMICTHREAT_API IAtomicGameModeInterface
 	GENERATED_BODY()
 
 public:
-
-	/*UFUNCTION()
-	virtual void AssignGameElements(ASpawnManager* SpawnManagerRef, AGridBase* CityGridRef) = 0;*/
-
 	UFUNCTION()
 	virtual void AssignSpawnManager(ASpawnManager* SpawnManagerRef) = 0;
 
@@ -35,7 +31,4 @@ public:
 
 	UFUNCTION()
 	virtual void TotalRocketsLeft(bool bRocketExists) = 0;
-
-	/*UFUNCTION()
-	virtual void UpdatePlayerPoints(bool bRocketExists) = 0;*/
 };

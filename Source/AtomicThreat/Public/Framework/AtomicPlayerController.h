@@ -4,12 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
-//#include "Blueprint/UserWidget.h"
 #include "AtomicPlayerController.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class ATOMICTHREAT_API AAtomicPlayerController : public APlayerController
 {

@@ -6,7 +6,6 @@
 
 AEnemyRocket::AEnemyRocket()
 {
-	//Super::GetParentActor();
 	RocketCapsule->SetCollisionProfileName(FName("EnemyCollision"));
 	RocketCapsule->OnComponentBeginOverlap.AddDynamic(this, &AEnemyRocket::OnCapsuleBeginOverlap);
 }

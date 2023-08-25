@@ -7,6 +7,7 @@
 void ADefenceRocket::Destroyed()
 {
 	SpawnExplosion();
+
 	Super::Destroyed();
 }
 

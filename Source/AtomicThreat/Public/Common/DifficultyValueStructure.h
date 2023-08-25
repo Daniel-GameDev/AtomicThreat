@@ -7,8 +7,6 @@
 #include "Engine/DataTable.h"
 #include "DifficultyValueStructure.generated.h"
 
-//class FRocketStructure;
-
 USTRUCT(BlueprintType)
 struct FDifficultyValueStruct : public FTableRowBase
 {

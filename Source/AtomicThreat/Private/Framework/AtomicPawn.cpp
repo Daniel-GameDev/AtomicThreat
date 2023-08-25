@@ -22,16 +22,9 @@ void AAtomicPawn::BeginPlay()
 void AAtomicPawn::Launch()
 {
 	FHitResult HitResult;
-	if (AtomicPlayerController)
-	{
+	if (AtomicPlayerController && Rocket)
 		if (AtomicPlayerController->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel1), true, HitResult))
-		{
-			if (Rocket)
-			{
-				PlayerLauncherGridElement->LaunchRocket(Rocket, HitResult.Location, 1.f, AtomicPlayerController); //TODO: Difficulty Increment - create Property for pawn
-			}
-		}
-	}
+			PlayerLauncherGridElement->LaunchRocket(Rocket, HitResult.Location, 1.f, AtomicPlayerController);
 	
 }
 
