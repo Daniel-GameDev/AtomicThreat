@@ -98,7 +98,7 @@ protected:
 	void RoundEnd();
 
 	UFUNCTION()
-	void RecoveryRandomCity();
+	void CityRecovery();
 
 	virtual void PostLogin(APlayerController* NewPlayer) override;
 

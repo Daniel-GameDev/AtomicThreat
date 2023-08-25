@@ -28,19 +28,19 @@ void AAtomicGameMode::StartRound()
 
 void AAtomicGameMode::NextRound()
 {
-	RecoveryRandomCity();
+	CityRecovery();
 
 	if (IPointsInterface* Interface = Cast<IPointsInterface>(MainPlayer->PlayerState))
-		Interface->SetPoints(CityPoints + AmmoPoints);
+		Interface->SetPoints(CityPoints / Bonus + AmmoPoints / Bonus);
 
-	CityPoints = 0;
-	AmmoPoints = 0;
-	TotalPoints = 0;
+	CityPoints = AmmoPoints = TotalPoints = 0;
+	//AmmoPoints = 0;
+	//TotalPoints = 0;
 	
 	Round++;
 	SpawnManager->SetNextRound(Round);
 
-	if (Round != 1 && Round % 2 > 0)
+	if (Round != 1 && Round % 2 == 0)
 	{
 		Bonus++;
 		Cast<AAtomicPlayerState>(MainPlayer->PlayerState)->SetBonus(Bonus);
@@ -74,7 +74,8 @@ void AAtomicGameMode::AssignCityGrid(AGridBase* CityGridRef)
 void AAtomicGameMode::OnCityElementDestroyed(AActor* DestroyedActorElement)
 {
 	//DestroyedElements.Add(DestroyedActorElement);
-	CityElementsLeft--;
+	if (Cast<AGridElementBase>(DestroyedActorElement)->bRecoveryRequiresPoints)
+		CityElementsLeft--;
 
 	if (CityElementsLeft == 0)
 		GameLost();
@@ -127,35 +128,64 @@ void AAtomicGameMode::RoundEnd()
 	MainPlayer->CreateUserWidget(MainPlayer->ScoreResultWidget);
 }
 
-void AAtomicGameMode::RecoveryRandomCity()
+void AAtomicGameMode::CityRecovery()
 {
 	AGridElementBase* Element;
 	TArray<AActor*> CityElements;
+	TArray<AGridElementBase*> DestroyedElements;
 	CityGrid->GetAttachedActors(CityElements);
+	int32 ArrayLenght = CityElements.Num();
 
 	for (int32 i = 0; i < CityElements.Num(); i++)
 	{
 		Element = Cast<AGridElementBase>(CityElements[i]);
-		if (!Element->bDestroyed)
+		if (Element->bRecoveryRequiresPoints && Element->bDestroyed)
+			DestroyedElements.Add(Element);
+		else if (!Element->bRecoveryRequiresPoints)
+			Element->Recovery();
+	}
+
+	/*for (AActor* TActor : CityElements)
+	{
+		Element = Cast<AGridElementBase>(TActor);
+		if (Element->bRecoveryRequiresPoints)
+		{
+			if (!Element->bDestroyed)
+			{
+				CityElements.Remove(Element);
+			}
+		}
+		else
+		{
+			Element->Recovery();
+			CityElements.Remove(Element);
+		}
+	}
+	*/
+	
+
+
+		/*if (Element->bDestroyed)
 		{
 			if (Element->bRecoveryRequiresPoints)
 				CityElements.RemoveAt(i);
 			else
 				Element->Recovery(); //TODO: create separate function ??
-		}
+		}*/
 		/*else if (!Element->bRecoveryRequiresPoints)
 		{
 			Element->Recovery();
 		}*/
 		/*if (!Element->bRecoveryRequiresPoints) // !!! ???
 				Element->Recovery();*/
-	}
+	
 
-	if (TotalPoints == CityRecoveryPrice)
+	if (TotalPoints >= CityRecoveryPrice && DestroyedElements.IsValidIndex(0))
 	{
-		int32 RandElement = FMath::RandRange(0, CityElements.Num() - 1);
-		Cast<AGridElementBase>(CityElements[RandElement])->Recovery();
+		int32 RandElement = FMath::RandRange(0, DestroyedElements.Num() - 1);
+		DestroyedElements[RandElement]->Recovery();
 		CityRecoveryPrice += DefaultCityRecoveryPrice;
+		CityElementsLeft++;
 	}
 }
 

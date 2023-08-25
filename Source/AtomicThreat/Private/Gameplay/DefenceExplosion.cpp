@@ -37,7 +37,7 @@ void ADefenceExplosion::TraceExplosion(float ExpSize)
 	if (UKismetSystemLibrary::SphereTraceSingleByProfile(GetWorld(), GetActorLocation(), GetActorLocation(), Size * ExpSize, FName("Explosion"),
 		false, ActorsToIgnore, EDrawDebugTrace::ForDuration, HitResult, true, FLinearColor::Red, FLinearColor::Green, 0.f))
 	{
-		int32 Points;
+		int32 Points = 0;
 		if (IPointsInterface* Interface = Cast<IPointsInterface>(HitResult.GetComponent()->GetOwner()))
 			Points = Interface->GetPoints();
 
