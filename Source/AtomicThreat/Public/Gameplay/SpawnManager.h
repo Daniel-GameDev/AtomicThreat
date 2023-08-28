@@ -58,7 +58,7 @@ protected:
 	int32 RocketsLeft;
 
 	UPROPERTY()
-	int32 DifficultyIncrement;
+	float DifficultyIncrement;
 
 	UPROPERTY()
 	FTimerHandle SpawnDelayTimerHandle;

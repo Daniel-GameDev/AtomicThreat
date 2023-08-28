@@ -70,11 +70,11 @@ void APlayerLauncherGridElement::OnCapsuleBeginOverlap(UPrimitiveComponent* Over
 	Destroyed();
 }
 
-void APlayerLauncherGridElement::LaunchRocket(TSubclassOf<ARocketBase> RocketType, FVector TargetVector, float DifficultyIncrement, APlayerController* PlayerController)
+void APlayerLauncherGridElement::LaunchRocket(TSubclassOf<ARocketBase> RocketType, FTransform TargetTransform, float DifficultyIncrement, APlayerController* PlayerController)
 {
 	if (Ammo->UseAmmo())
 	{
-		Super::LaunchRocket(RocketType, TargetVector, DifficultyIncrement, PlayerController);
+		Super::LaunchRocket(RocketType, TargetTransform, DifficultyIncrement, PlayerController);
 	}
 
 }
@@ -84,12 +84,12 @@ void APlayerLauncherGridElement::SpawnAmmo()
 	if (AmmoClass)
 	{
 		FActorSpawnParameters SpawnParam;
-		Ammo = GetWorld()->SpawnActor<AAmmo>(AmmoClass, GetActorLocation(), FRotator(), SpawnParam);
+		Ammo = GetWorld()->SpawnActor<AAmmo>(AmmoClass, FVector(AmmoDisplayLocation.X, 0.f, AmmoDisplayLocation.Z), FRotator(0.f, 0.f, 0.f), SpawnParam);
 
-		FAttachmentTransformRules TransformRules = FAttachmentTransformRules(EAttachmentRule::KeepWorld, EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, false);
+		FAttachmentTransformRules TransformRules = FAttachmentTransformRules(EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, false);
 		Ammo->AttachToActor(this, TransformRules);
-		Ammo->SetActorLocation(FVector(AmmoDisplayLocation.X, Ammo->GetActorLocation().Y, AmmoDisplayLocation.Z));
-		Ammo->SetActorRotation(FRotator(0.f, 0.f, 0.f));
+		//Ammo->SetActorLocation(); //Ammo->GetActorLocation().Y
+		//Ammo->SetActorRotation();
 
 	}
 	
@@ -111,8 +111,4 @@ void APlayerLauncherGridElement::Destroyed()
 int32 APlayerLauncherGridElement::GetPoints()
 {
 	return Ammo->AmmoLeft() * Points;
-}
-
-void APlayerLauncherGridElement::SetPoints(int32 NewPoints)
-{
 }

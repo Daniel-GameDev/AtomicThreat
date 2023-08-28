@@ -25,7 +25,7 @@ protected:
 
 public:
 	UFUNCTION(BlueprintCallable)
-	virtual void LaunchRocket(TSubclassOf<ARocketBase> RocketType, FVector TargetVector, float DifficultyIncrement, APlayerController* PlayerController = nullptr);
+	virtual void LaunchRocket(TSubclassOf<ARocketBase> RocketType, FTransform TargetTransform, float DifficultyIncrement, APlayerController* PlayerController = nullptr);
 
 	UFUNCTION(BlueprintCallable)
 	virtual void LaunchMultiRocket(TSubclassOf<ARocketBase> RocketType, FVector TargetVector, TArray<FVector> TargetVectors, float DifficultyIncrement);

@@ -16,10 +16,6 @@ int32 AMultiEnemyRocket::GetPoints()
 	return Points;
 }
 
-void AMultiEnemyRocket::SetPoints(int32 NewPoints)
-{
-}
-
 void AMultiEnemyRocket::BeginDecay()
 {
 	SpawnRockets(true);
@@ -37,7 +33,7 @@ void AMultiEnemyRocket::SpawnRockets(bool bDestroyAfterSpawn)
 			if (ARocketBase* RocketBase = Cast<ARocketBase>(RocketActor))
 			{
 				int32 RandTargetIndex = FMath::RandRange(0, TargetVectors.Num() - 1);
-				RocketBase->TargetVector = TargetVectors[RandTargetIndex];
+				RocketBase->TargetTransform.SetLocation(TargetVectors[RandTargetIndex]);// = ;
 				RocketBase->DifficultyIncrement = DifficultyIncrement;
 				if (RocketBase->bMultiRocket)
 				{

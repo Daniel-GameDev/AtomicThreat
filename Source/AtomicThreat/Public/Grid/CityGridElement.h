@@ -41,5 +41,6 @@ public:
 
 	// Inherited via IPointsInterface
 	virtual int32 GetPoints() override;
-	virtual void SetPoints(int32 NewPoints) override;
+
+	FORCEINLINE virtual void SetPoints(int32 NewPoints) override {}
 };

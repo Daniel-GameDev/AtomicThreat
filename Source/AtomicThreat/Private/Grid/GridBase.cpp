@@ -37,8 +37,7 @@ void AGridBase::CreateBaseGird()
 	{
 		if (TGridElement)
 		{
-			AGridElementBase* NewGridElement = GetWorld()->SpawnActor<AGridElementBase>
-				(TGridElement, FVector(ActorLocation.X, ActorLocation.Y + Spacing, ActorLocation.Z), GetActorRotation(), SpawnParams);
+			AGridElementBase* NewGridElement = GetWorld()->SpawnActor<AGridElementBase>(TGridElement, FVector(ActorLocation.X, ActorLocation.Y + Spacing, ActorLocation.Z), GetActorRotation(), SpawnParams);
 			Spacing = GridSpacing;
 
 			ActorLocation = NewGridElement->GetActorLocation();

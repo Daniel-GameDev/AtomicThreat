@@ -50,7 +50,7 @@ void ASpawnManager::GetRoundData()
 TArray<float> ASpawnManager::GetSpawnTime(int32 RocketAmount)
 {
 	TArray<float> Time;
-
+	
 	for (size_t i = 0; i < RocketAmount; i++)
 		Time.Add(UKismetMathLibrary::RandomFloatInRange(SpawnTimeMin, SpawnTimeMax));
 
@@ -130,7 +130,7 @@ void ASpawnManager::SpawnBasedOnGridType(AActor* Launcher, TSubclassOf<ARocketBa
 	if (Rocket.GetDefaultObject()->bMultiRocket)
 		Cast<ALauncherBaseGridElement>(Launcher)->LaunchMultiRocket(Rocket, Target, CityTargets, DifficultyIncrement);
 	else
-		Cast<ALauncherBaseGridElement>(Launcher)->LaunchRocket(Rocket, Target, DifficultyIncrement);
+		Cast<ALauncherBaseGridElement>(Launcher)->LaunchRocket(Rocket, FTransform(Target), DifficultyIncrement);
 
 }
 

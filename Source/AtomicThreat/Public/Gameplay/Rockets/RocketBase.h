@@ -10,6 +10,7 @@ class UArrowComponent;
 class UCapsuleComponent;
 class UProjectileMovementComponent;
 class ATargetBase;
+class UNiagaraComponent;
 
 UCLASS(Config = Game, BlueprintType)
 class ATOMICTHREAT_API ARocketBase : public AActor
@@ -20,10 +21,10 @@ public:
 	ARocketBase();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Target)
-	FVector TargetVector;
+	FTransform TargetTransform;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = RocketSettings)
-	float DifficultyIncrement = 1.f;
+	float DifficultyIncrement;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
 	bool bSideLaunch;
@@ -37,6 +38,12 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	APlayerController* PlayerController;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UArrowComponent* RocketForward;
+
+	UFUNCTION()
+	void SetProjectileSettings();
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -44,31 +51,34 @@ protected:
 	USceneComponent* SceneRoot;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UArrowComponent* RocketForward;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UStaticMeshComponent* RocketMesh;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	USkeletalMeshComponent* RocketSkeletalMesh;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UCapsuleComponent* RocketCapsule;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UNiagaraComponent* NiagaraComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UProjectileMovementComponent* ProjectileMovement;
 
 	UPROPERTY(Config, EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
-	float InitialSpeed ; //= 4000.f
+	float InitialSpeed;
 
 	UPROPERTY(Config, EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
-	float MaxSpeed ; //= 4000.f
+	float MaxSpeed;
 
 	UPROPERTY(Config, EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
-	float RotationSpeed ; //= 100.f
+	float RotationSpeed;
 
 	UPROPERTY(Config, EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
-	float ToleranceTargetCoordinate ; //= 400.f
+	float ToleranceTargetCoordinate;
 
 	UPROPERTY(Config, EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
-	float HomingAccelerationMagnitude ; //= 16000.f
+	float HomingAccelerationMagnitude;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Target)
 	TSubclassOf<ATargetBase> Target;
@@ -104,8 +114,7 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void TargetHit();
 
-	UFUNCTION()
-	void SetProjectileSettings();
+	
 
 public:
 	virtual void Tick(float DeltaTime) override;

@@ -24,7 +24,12 @@ void AAtomicPawn::Launch()
 	FHitResult HitResult;
 	if (AtomicPlayerController && Rocket)
 		if (AtomicPlayerController->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel1), true, HitResult))
-			PlayerLauncherGridElement->LaunchRocket(Rocket, HitResult.Location, 1.f, AtomicPlayerController);
+		{
+			//HitResult.Location;
+			//HitResult.Actor->GetActorRotation();
+			FTransform TargetTransform(GetActorRotation(), HitResult.Location);
+			PlayerLauncherGridElement->LaunchRocket(Rocket, TargetTransform, 1.f, AtomicPlayerController);
+		}
 	
 }
 

@@ -58,18 +58,18 @@ void AAtomicGameMode::AssignCityGrid(AGridBase* CityGridRef)
 	TArray<AActor*> CityGridActors;
 	CityGrid->GetAttachedActors(CityGridActors);
 
-	for (int32 i = 0; i < CityGridActors.Num()-1; i++)
+	for (int32 i = 0; i < CityGridActors.Num(); i++)
 	{
 		CityGridActors[i]->OnDestroyed.AddDynamic(this, &AAtomicGameMode::OnCityElementDestroyed);
 
-		if (Cast<AGridElementBase>(CityGridActors[i])->bRecoveryRequiresPoints)
+		if (Cast<AGridElementBase>(CityGridActors[i])->bRecoveryRequiresPoints) // check here
 			CityElementsLeft++;
 	}
 }
 
 void AAtomicGameMode::OnCityElementDestroyed(AActor* DestroyedActorElement)
 {
-	if (Cast<AGridElementBase>(DestroyedActorElement)->bRecoveryRequiresPoints)
+	if (Cast<AGridElementBase>(DestroyedActorElement)->bRecoveryRequiresPoints) // check here
 		CityElementsLeft--;
 
 	if (CityElementsLeft == 0)

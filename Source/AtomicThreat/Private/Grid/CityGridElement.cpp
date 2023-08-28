@@ -59,7 +59,3 @@ int32 ACityGridElement::GetPoints()
 {
 	return Points;
 }
-
-void ACityGridElement::SetPoints(int32 NewPoints)
-{
-}

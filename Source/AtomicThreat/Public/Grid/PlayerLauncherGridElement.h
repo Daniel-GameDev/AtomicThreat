@@ -49,7 +49,7 @@ protected:
 	void OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit);
 
 public:
-	virtual void LaunchRocket(TSubclassOf<ARocketBase> RocketType, FVector TargetVector, float DifficultyIncrement, APlayerController* PlayerController = nullptr) override;
+	virtual void LaunchRocket(TSubclassOf<ARocketBase> RocketType, FTransform TargetTransform, float DifficultyIncrement, APlayerController* PlayerController = nullptr) override;
 
 	UFUNCTION()
 	void SpawnAmmo();
@@ -59,7 +59,7 @@ public:
 	// Inherited via IPointsInterface
 	virtual int32 GetPoints() override;
 
-	virtual void SetPoints(int32 NewPoints) override;
+	FORCEINLINE virtual void SetPoints(int32 NewPoints) override {};
 
 private:
 	UPROPERTY()

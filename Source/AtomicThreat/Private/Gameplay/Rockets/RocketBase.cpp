@@ -10,12 +10,15 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Common/AtomicGameModeInterface.h"
 #include "GameFramework/GameModeBase.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
 
 ARocketBase::ARocketBase()
+	//:
+	//InitialSpeed(4000.f),
+	//MaxSpeed(4000.f)
 {
 	PrimaryActorTick.bCanEverTick = true;
-
-	//LoadConfig();
 
 	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("RocketSceneRoot"));
 	SetRootComponent(SceneRoot);
@@ -26,19 +29,22 @@ ARocketBase::ARocketBase()
 	RocketMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("RocketMesh"));
 	RocketMesh->SetupAttachment(RocketForward);
 
+	RocketSkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("RocketSkeletalMesh"));
+	RocketSkeletalMesh->SetupAttachment(RocketForward);
+
 	RocketCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("RocketCpasule"));
-	RocketCapsule->SetupAttachment(RocketMesh);
+	RocketCapsule->SetupAttachment(RocketForward);
+	RocketCapsule->SetCollisionObjectType(ECC_GameTraceChannel2);
+
+	NiagaraComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("RocketNiagaraComponent"));
+	NiagaraComponent->SetupAttachment(RocketForward);
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
-	//ProjectileMovement->InitialSpeed = this->InitialSpeed * DifficultyIncrement;
-	//ProjectileMovement->MaxSpeed = this->MaxSpeed * DifficultyIncrement;
-	//ProjectileMovement->HomingAccelerationMagnitude = this->HomingAccelerationMagnitude;
-	//ProjectileMovement->bRotationFollowsVelocity = true;
-	//ProjectileMovement->ProjectileGravityScale = 0.f;
-	//ProjectileMovement->bIsHomingProjectile = true;
 	//ProjectileMovement->InitialSpeed = this->InitialSpeed;
 	//ProjectileMovement->MaxSpeed = this->MaxSpeed;
-	//ProjectileMovement->HomingAccelerationMagnitude = this->HomingAccelerationMagnitude;
+	ProjectileMovement->bRotationFollowsVelocity = true;
+	ProjectileMovement->ProjectileGravityScale = 0.f;
+	ProjectileMovement->bIsHomingProjectile = true;
 }
 
 void ARocketBase::BeginPlay()
@@ -64,7 +70,7 @@ void ARocketBase::CreateTarget()
 		SpawnParams.Owner = this;
 		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-		TargetSceneRoot = GetWorld()->SpawnActor<ATargetBase>(Target, TargetVector, FRotator(), SpawnParams)->GetRootComponent();
+		TargetSceneRoot = GetWorld()->SpawnActor<ATargetBase>(Target, TargetTransform.GetLocation(), TargetTransform.GetRotation().Rotator(), SpawnParams)->GetRootComponent();
 		ProjectileMovement->HomingTargetComponent = TargetSceneRoot;
 	}
 }
@@ -77,7 +83,7 @@ void ARocketBase::DrawDebugLineRocketTrajectory()
 
 void ARocketBase::DrawDebugLineFromStartToEnd()
 {
-	DrawDebugLine(GetWorld(), StartPoint, TargetVector, FColor::Blue, false, 5.f, 0U, 50.f);
+	DrawDebugLine(GetWorld(), StartPoint, TargetTransform.GetLocation(), FColor::Blue, false, 5.f, 0U, 50.f);
 }
 
 void ARocketBase::RocketRotation(float DeltaTime)
@@ -92,9 +98,6 @@ void ARocketBase::TargetHit()
 
 void ARocketBase::SetProjectileSettings()
 {
-	ProjectileMovement->bRotationFollowsVelocity = true;
-	ProjectileMovement->ProjectileGravityScale = 0.f;
-	ProjectileMovement->bIsHomingProjectile = true;
 	ProjectileMovement->InitialSpeed = this->InitialSpeed * DifficultyIncrement;
 	ProjectileMovement->MaxSpeed = this->MaxSpeed * DifficultyIncrement;
 	ProjectileMovement->HomingAccelerationMagnitude = this->HomingAccelerationMagnitude;
@@ -106,7 +109,7 @@ void ARocketBase::Tick(float DeltaTime)
 
 	RocketRotation(DeltaTime);
 
-	if (UKismetMathLibrary::EqualEqual_VectorVector(GetActorLocation(), TargetVector, ToleranceTargetCoordinate))
+	if (UKismetMathLibrary::EqualEqual_VectorVector(GetActorLocation(), TargetTransform.GetLocation(), ToleranceTargetCoordinate))
 		TargetHit();
 
 	if (bDrawDebugLineRocketTrajectory)

@@ -20,7 +20,3 @@ int32 AEnemyRocket::GetPoints()
 {
 	return Points;
 }
-
-void AEnemyRocket::SetPoints(int32 NewPoints)
-{
-}
