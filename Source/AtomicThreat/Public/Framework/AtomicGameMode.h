@@ -17,7 +17,7 @@ class ATOMICTHREAT_API AAtomicGameMode : public AGameModeBase, public IAtomicGam
 	GENERATED_BODY()
 	
 public:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
 	int32 Round;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -35,8 +35,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void BeginGame();
 
-	UFUNCTION(BlueprintCallable)
-	void StartRound();
+	/*UFUNCTION(BlueprintCallable)
+	void StartRound();*/
 
 	UFUNCTION(BlueprintCallable)
 	void NextRound();
@@ -52,6 +52,9 @@ public:
 
 	UFUNCTION()
 	virtual void TotalRocketsLeft(bool bRocketExists) override;
+
+	UFUNCTION()
+	virtual void EndGame(int32 TotalRounds) override;
 
 protected:
 	UPROPERTY()
@@ -77,6 +80,9 @@ protected:
 
 	UPROPERTY()
 	bool bGameLost;
+
+	UPROPERTY()
+	int32 LastRound;
 
 	UPROPERTY()
 	int32 Bonus = 1;

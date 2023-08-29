@@ -31,4 +31,7 @@ public:
 
 	UFUNCTION()
 	virtual void TotalRocketsLeft(bool bRocketExists) = 0;
+
+	UFUNCTION()
+	virtual void EndGame(int32 TotalRounds) = 0;
 };

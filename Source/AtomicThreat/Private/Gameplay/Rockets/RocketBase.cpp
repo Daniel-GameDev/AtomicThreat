@@ -14,9 +14,6 @@
 #include "NiagaraComponent.h"
 
 ARocketBase::ARocketBase()
-	//:
-	//InitialSpeed(4000.f),
-	//MaxSpeed(4000.f)
 {
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -28,20 +25,19 @@ ARocketBase::ARocketBase()
 
 	RocketMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("RocketMesh"));
 	RocketMesh->SetupAttachment(RocketForward);
+	RocketMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	RocketSkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("RocketSkeletalMesh"));
 	RocketSkeletalMesh->SetupAttachment(RocketForward);
 
 	RocketCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("RocketCpasule"));
 	RocketCapsule->SetupAttachment(RocketForward);
-	RocketCapsule->SetCollisionObjectType(ECC_GameTraceChannel2);
+	RocketCapsule->SetCollisionObjectType(ECollisionChannel::ECC_GameTraceChannel2);
 
 	NiagaraComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("RocketNiagaraComponent"));
 	NiagaraComponent->SetupAttachment(RocketForward);
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
-	//ProjectileMovement->InitialSpeed = this->InitialSpeed;
-	//ProjectileMovement->MaxSpeed = this->MaxSpeed;
 	ProjectileMovement->bRotationFollowsVelocity = true;
 	ProjectileMovement->ProjectileGravityScale = 0.f;
 	ProjectileMovement->bIsHomingProjectile = true;

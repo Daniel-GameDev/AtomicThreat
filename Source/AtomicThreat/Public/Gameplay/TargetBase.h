@@ -12,15 +12,15 @@ class ATOMICTHREAT_API ATargetBase : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
 	ATargetBase();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	USceneComponent* SceneRoot;
+
 public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 };

@@ -32,8 +32,7 @@ void ADefenceExplosion::TraceExplosion(float ExpSize)
 	const TArray<AActor*> ActorsToIgnore;
 	FHitResult HitResult;
 
-	if (UKismetSystemLibrary::SphereTraceSingleByProfile(GetWorld(), GetActorLocation(), GetActorLocation(), Size * ExpSize, FName("Explosion"),
-		false, ActorsToIgnore, EDrawDebugTrace::ForDuration, HitResult, true, FLinearColor::Red, FLinearColor::Green, 0.f))
+	if (UKismetSystemLibrary::SphereTraceSingle(GetWorld(), GetActorLocation(), GetActorLocation(), Size * ExpSize, UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel2), false, ActorsToIgnore, EDrawDebugTrace::ForDuration, HitResult, true, FLinearColor::Red, FLinearColor::Green, 0.f))
 	{
 		int32 Points = 0;
 		if (IPointsInterface* Interface = Cast<IPointsInterface>(HitResult.GetComponent()->GetOwner()))

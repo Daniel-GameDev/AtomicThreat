@@ -26,6 +26,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSubclassOf<UUserWidget> ScoreResultWidget;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSubclassOf<UUserWidget> EndGameWidget;
+
 	UFUNCTION()
 	void CreateUserWidget(TSubclassOf<UUserWidget> Widget);
 	

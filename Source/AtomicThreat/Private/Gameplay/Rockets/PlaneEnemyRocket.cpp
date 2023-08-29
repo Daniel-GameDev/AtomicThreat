@@ -9,10 +9,10 @@
 APlaneEnemyRocket::APlaneEnemyRocket()
 {
 	AttachedRocketMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("AttachedRocketMesh"));
-	AttachedRocketMesh->SetupAttachment(GetRootComponent());
+	AttachedRocketMesh->SetupAttachment(RocketForward);
 
-	//SecondNiagaraComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("SecondNiagaraComponent"));
-	//SecondNiagaraComponent->SetupAttachment(Cast<ARocketBase>(GetParentActor())->RocketForward);
+	SecondNiagaraComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("SecondNiagaraComponent"));
+	SecondNiagaraComponent->SetupAttachment(RocketForward);
 
 }
 

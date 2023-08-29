@@ -17,14 +17,15 @@ void AAtomicGameMode::BeginGame()
 		CityRecoveryPrice = DefaultCityRecoveryPrice;
 		SpawnManager->SpawnGameGrids();
 		MainPlayer->CreateUserWidget(MainPlayer->GameRoundWidget);
-		StartRound();
+		SpawnManager->SetNextRound(Round);
+		SpawnManager->StartRound();
 	}
 }
 
-void AAtomicGameMode::StartRound()
+/*void AAtomicGameMode::StartRound()
 {
 	SpawnManager->StartRound();
-}
+}*/
 
 void AAtomicGameMode::NextRound()
 {
@@ -44,7 +45,7 @@ void AAtomicGameMode::NextRound()
 		Cast<AAtomicPlayerState>(MainPlayer->PlayerState)->SetBonus(Bonus);
 	}
 
-	StartRound();
+	SpawnManager->StartRound();
 }
 
 void AAtomicGameMode::AssignSpawnManager(ASpawnManager* SpawnManagerRef)
@@ -117,7 +118,11 @@ void AAtomicGameMode::RoundEnd()
 	}
 
 	TotalPoints = CityPoints + AmmoPoints + PointsFromPlayer;
-	MainPlayer->CreateUserWidget(MainPlayer->ScoreResultWidget);
+
+	if (Round == LastRound)
+		MainPlayer->CreateUserWidget(MainPlayer->EndGameWidget);
+	else
+		MainPlayer->CreateUserWidget(MainPlayer->ScoreResultWidget);
 }
 
 void AAtomicGameMode::CityRecovery()
@@ -160,4 +165,10 @@ void AAtomicGameMode::TotalRocketsLeft(bool bRocketExists)
 
 	if (TotalRockets == 0 && RocketsLeftInSpawner == 0 && bGameLost == false)
 		RoundEnd();
+	
+}
+
+void AAtomicGameMode::EndGame(int32 TotalRounds)
+{
+	LastRound = TotalRounds;
 }

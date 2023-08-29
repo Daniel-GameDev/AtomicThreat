@@ -38,9 +38,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	APlayerController* PlayerController;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UArrowComponent* RocketForward;
-
 	UFUNCTION()
 	void SetProjectileSettings();
 
@@ -49,6 +46,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	USceneComponent* SceneRoot;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UArrowComponent* RocketForward;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UStaticMeshComponent* RocketMesh;

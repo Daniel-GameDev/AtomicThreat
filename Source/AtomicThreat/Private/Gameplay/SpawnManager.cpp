@@ -28,23 +28,30 @@ void ASpawnManager::BeginPlay()
 	{
 		if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
 			Interface->AssignSpawnManager(this);
+
+		TArray<FName> RowNames = DifficultyTable->GetRowNames();
+		if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
+			Interface->EndGame(RowNames.Num()-1);
 	}
 }
 
 void ASpawnManager::GetRoundData()
 {
 	TArray<FName> RowNames = DifficultyTable->GetRowNames();
-	FDifficultyValueStruct* DifficultyValueStruct = DifficultyTable->FindRow<FDifficultyValueStruct>(RowNames[Round], "");
 
-	for (FRocketStruct TRocketStruct : DifficultyValueStruct->RocketTypes)
-		RocketsLeft += TRocketStruct.Amount;
+	if (const FDifficultyValueStruct* DifficultyValueStruct = DifficultyTable->FindRow<FDifficultyValueStruct>(RowNames[Round], ""))
+	{
+		for (FRocketStruct TRocketStruct : DifficultyValueStruct->RocketTypes)
+			RocketsLeft += TRocketStruct.Amount;
 
-	SpawnTimeArray = GetSpawnTime(RocketsLeft);
-	RocketsToSpawn = DifficultyValueStruct->RocketTypes;
-	DifficultyIncrement = DifficultyValueStruct->DifficultyIncrement;
+		SpawnTimeArray = GetSpawnTime(RocketsLeft);
+		RocketsToSpawn = DifficultyValueStruct->RocketTypes;
+		DifficultyIncrement = DifficultyValueStruct->DifficultyIncrement;
 
-	if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
-		Interface->SpawnerRocketsLeft(RocketsLeft);
+		if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
+			Interface->SpawnerRocketsLeft(RocketsLeft);
+	}
+
 }
 
 TArray<float> ASpawnManager::GetSpawnTime(int32 RocketAmount)
@@ -153,7 +160,6 @@ bool ASpawnManager::GetRandomRocketFromRoundData(TSubclassOf<ARocketBase>& Rocke
 			
 	}
 	else return false;
-	
 
 	return true;
 }
