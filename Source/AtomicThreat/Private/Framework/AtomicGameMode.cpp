@@ -22,11 +22,6 @@ void AAtomicGameMode::BeginGame()
 	}
 }
 
-/*void AAtomicGameMode::StartRound()
-{
-	SpawnManager->StartRound();
-}*/
-
 void AAtomicGameMode::NextRound()
 {
 	CityRecovery();

@@ -17,9 +17,9 @@ class ATOMICTHREAT_API APlayerLauncherGridElement : public ALauncherBaseGridElem
 	GENERATED_BODY()
 
 public:
-	virtual void BeginPlay() override;
-
 	APlayerLauncherGridElement();
+
+	virtual void BeginPlay() override;
 
 	virtual void Recovery() override;
 
@@ -63,7 +63,7 @@ public:
 	virtual void Destroyed() override;
 
 	// Inherited via IPointsInterface
-	virtual int32 GetPoints() override;
+	FORCEINLINE virtual int32 GetPoints() override;
 
 	FORCEINLINE virtual void SetPoints(int32 NewPoints) override {};
 

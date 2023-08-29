@@ -42,7 +42,7 @@ public:
 	void NextRound();
 
 	UFUNCTION()
-	virtual void AssignSpawnManager(ASpawnManager* SpawnManagerRef) override;
+	virtual void AssignSpawnManager(ASpawnManager* SpawnManagerRef) override; //TODO Delete interface - make getter / setter
 
 	UFUNCTION()
 	virtual void AssignCityGrid(AGridBase* CityGridRef) override;

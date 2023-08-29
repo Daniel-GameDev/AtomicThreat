@@ -9,8 +9,8 @@
 #include "Gameplay/Rockets/RocketBase.h"
 #include "Grid/LauncherBaseGridElement.h"
 #include "Kismet/GameplayStatics.h"
-#include "GameFramework/GameModeBase.h"
-#include "Common/AtomicGameModeInterface.h"
+#include "GameFramework/GameModeBase.h" //TODO AtomicGameMode
+#include "Common/AtomicGameModeInterface.h" //TODO Delete
 
 ASpawnManager::ASpawnManager()
 {
