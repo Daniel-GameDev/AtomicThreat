@@ -34,4 +34,7 @@ public:
 
 	UFUNCTION()
 	virtual void EndGame(int32 TotalRounds) = 0;
+
+	UFUNCTION()
+	virtual void StartPlayerCameraShake() = 0;
 };

@@ -5,6 +5,11 @@
 #include "Components/TimelineComponent.h"
 #include "Common/PointsInterface.h"
 #include "Framework/AtomicPlayerState.h"
+#include "Common/AtomicGameModeInterface.h"
+#include "GameFramework/GameModeBase.h"
+#include "Particles/ParticleSystem.h"
+#include "Particles/ParticleSystemComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 ADefenceExplosion::ADefenceExplosion()
 {
@@ -15,6 +20,15 @@ ADefenceExplosion::ADefenceExplosion()
 void ADefenceExplosion::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (GetWorld() && ExplosionParticle)
+	{
+		float ExplosionScale = Size / SizeDevider;
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticle, FTransform(FRotator(), GetActorLocation(), FVector(ExplosionScale)));
+	}
+
+	if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
+		Interface->StartPlayerCameraShake();
 
 	if (CurveFloat)
 	{

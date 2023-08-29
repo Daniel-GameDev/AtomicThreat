@@ -30,11 +30,17 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	float Duration = 3.f;
 
-	UPROPERTY()
-	FTimeline CurveTimeline;
-
 	UPROPERTY(EditAnywhere, Category = Timeline)
 	UCurveFloat* CurveFloat;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UParticleSystem* ExplosionParticle;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	float SizeDevider = 100.f;
+
+	UPROPERTY()
+	FTimeline CurveTimeline;
 
 	UFUNCTION()
 	void TraceExplosion(float ExpSize);

@@ -12,6 +12,9 @@
 #include "GameFramework/GameModeBase.h"
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraComponent.h"
+#include "Particles/ParticleSystem.h"
+#include "Particles/ParticleSystemComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 ARocketBase::ARocketBase()
 {
@@ -122,7 +125,10 @@ void ARocketBase::Destroyed()
 
 	if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
 		Interface->TotalRocketsLeft(false);
-	
+
+	if (GetWorld() && DestroyParticle && bSpawnDestroyedParticle)
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), DestroyParticle, FTransform(GetActorRotation(), GetActorLocation(), FVector(DestroyParticleScale)));
+
 	Super::Destroyed();
 }
 

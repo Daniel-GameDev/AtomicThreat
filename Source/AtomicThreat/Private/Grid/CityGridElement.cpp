@@ -3,6 +3,11 @@
 
 #include "Grid/CityGridElement.h"
 #include "Components/CapsuleComponent.h"
+#include "Particles/ParticleSystem.h"
+#include "Particles/ParticleSystemComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Common/AtomicGameModeInterface.h"
+#include "GameFramework/GameModeBase.h"
 
 ACityGridElement::ACityGridElement()
 {
@@ -21,30 +26,41 @@ ACityGridElement::ACityGridElement()
 	CityCapsule->SetCapsuleRadius(300.f);
 	CityCapsule->OnComponentBeginOverlap.AddDynamic(this, &ACityGridElement::OnCapsuleBeginOverlap);
 
+	DestroyedParticle = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("DestroyedParticle"));
+	DestroyedParticle->SetupAttachment(DestroyedCityMesh);
+	DestroyedParticle->SetHiddenInGame(true);
+
 	DestroyedCityMesh->SetVisibility(false);
 	bDestroyed = false;
 }
 
 void ACityGridElement::Recovery()
 {
-	RestoreCity();
+	if (bDestroyed)
+		RestoreCity();
 }
 
 void ACityGridElement::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
 	UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit)
 {
+	if (GetWorld() && ExplosionParticle)
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticle, FTransform(GetActorRotation(), GetActorLocation(), FVector(ExplosionScale)));
+		if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
+			Interface->StartPlayerCameraShake();
+	}
+
 	if (!bDestroyed)
 		Destroyed();
 }
 
 void ACityGridElement::RestoreCity()
 {
-	if (bDestroyed)
-	{
-		bDestroyed = false;
-		DefaultCityMesh->SetVisibility(true);
-		DestroyedCityMesh->SetVisibility(false);
-	}
+	bDestroyed = false;
+	DefaultCityMesh->SetVisibility(true);
+	DestroyedCityMesh->SetVisibility(false);
+	DestroyedParticle->SetHiddenInGame(true);
+
 }
 
 void ACityGridElement::Destroyed()
@@ -52,7 +68,9 @@ void ACityGridElement::Destroyed()
 	bDestroyed = true;
 	DefaultCityMesh->SetVisibility(false);
 	DestroyedCityMesh->SetVisibility(true);
+	DestroyedParticle->SetHiddenInGame(false);
 	Super::Destroyed();
+
 }
 
 int32 ACityGridElement::GetPoints()

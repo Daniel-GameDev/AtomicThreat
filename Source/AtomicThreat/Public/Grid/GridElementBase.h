@@ -35,6 +35,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UStaticMeshComponent* GridMesh;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UParticleSystemComponent* DestroyedParticle;
+
 public:
 	virtual void Tick(float DeltaTime) override;
 

@@ -29,7 +29,13 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSubclassOf<UUserWidget> EndGameWidget;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSubclassOf<UCameraShakeBase> AtomicShakeClass;
+
 	UFUNCTION()
 	void CreateUserWidget(TSubclassOf<UUserWidget> Widget);
+
+	UFUNCTION()
+	void StartCameraShake();
 	
 };

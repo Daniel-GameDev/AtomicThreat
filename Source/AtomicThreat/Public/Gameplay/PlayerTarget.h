@@ -25,10 +25,10 @@ protected:
 	UStaticMeshComponent* TargetMesh;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	float RollValue;
+	float RollValue = 200.f;
 
 	UFUNCTION()
-	void RotateTarget(float DeltaTime);
+	void RotateTarget(float Tick);
 
 public:
 	virtual void Tick(float DeltaTime) override;

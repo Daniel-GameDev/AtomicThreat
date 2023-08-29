@@ -14,14 +14,14 @@ APlayerTarget::APlayerTarget()
 	TargetMesh->SetupAttachment(MeshScene);
 }
 
-void ATargetBase::Tick(float DeltaTime)
+void APlayerTarget::RotateTarget(float Tick)
 {
-	Super::Tick(DeltaTime);
-
+	float Roll = MeshScene->GetRelativeRotation().Roll + RollValue * Tick;
+	MeshScene->SetRelativeRotation(FRotator(0.f, 0.f, Roll));
 }
 
-void APlayerTarget::RotateTarget(float DeltaTime)
+void APlayerTarget::Tick(float DeltaTime)
 {
-	float Roll = (MeshScene->GetRelativeRotation().Roll + RollValue) * DeltaTime;
-	MeshScene->SetRelativeRotation(FRotator(0.f, 0.f, Roll));
+	Super::Tick(DeltaTime);
+	RotateTarget(DeltaTime);
 }

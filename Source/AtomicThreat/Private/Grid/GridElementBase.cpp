@@ -21,7 +21,7 @@ void AGridElementBase::Recovery()
 void AGridElementBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 void AGridElementBase::Tick(float DeltaTime)

@@ -23,6 +23,8 @@ protected:
 
 	virtual void BeginDecay() override;
 
+	virtual void TargetHit() override;
+
 public:
 	// Inherited via IPointsInterface
 	virtual int32 GetPoints() override;

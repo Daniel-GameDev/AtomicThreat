@@ -6,6 +6,10 @@
 #include "Kismet/GameplayStatics.h"
 #include "Gameplay/Ammo.h"
 #include "Components/CapsuleComponent.h"
+#include "Common/AtomicGameModeInterface.h"
+#include "GameFramework/GameModeBase.h"
+#include "Particles/ParticleSystem.h"
+#include "Particles/ParticleSystemComponent.h"
 
 APlayerLauncherGridElement::APlayerLauncherGridElement()
 {
@@ -68,14 +72,18 @@ void APlayerLauncherGridElement::RestoreLauncher()
 void APlayerLauncherGridElement::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit)
 {
 	Destroyed();
+
+	if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
+		Interface->StartPlayerCameraShake();
+
+	if (GetWorld() && ExplosionParticle)
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticle, FTransform(GetActorRotation(), GetActorLocation(), FVector(ExplosionScale)));
 }
 
 void APlayerLauncherGridElement::LaunchRocket(TSubclassOf<ARocketBase> RocketType, FTransform TargetTransform, float DifficultyIncrement, APlayerController* PlayerController)
 {
 	if (Ammo->UseAmmo())
-	{
 		Super::LaunchRocket(RocketType, TargetTransform, DifficultyIncrement, PlayerController);
-	}
 
 }
 
@@ -88,8 +96,6 @@ void APlayerLauncherGridElement::SpawnAmmo()
 
 		FAttachmentTransformRules TransformRules = FAttachmentTransformRules(EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, false);
 		Ammo->AttachToActor(this, TransformRules);
-		//Ammo->SetActorLocation(); //Ammo->GetActorLocation().Y
-		//Ammo->SetActorRotation();
 
 	}
 	
@@ -103,8 +109,8 @@ void APlayerLauncherGridElement::Destroyed()
 		bDestroyed = true;
 		RocketLauncherMesh->SetVisibility(false);
 		DestroyedLauncherMesh->SetVisibility(true);
+		
 	}
-
 	Super::Destroyed();
 }
 

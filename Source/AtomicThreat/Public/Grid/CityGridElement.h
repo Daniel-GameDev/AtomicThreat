@@ -29,6 +29,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UCapsuleComponent* CityCapsule;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UParticleSystem* ExplosionParticle;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	float ExplosionScale = 3.f;
 
 public:
 	UFUNCTION(BlueprintCallable)

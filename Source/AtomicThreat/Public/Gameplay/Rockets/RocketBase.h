@@ -62,6 +62,12 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UNiagaraComponent* NiagaraComponent;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UParticleSystem* DestroyParticle;
+
+	UPROPERTY(Config, EditDefaultsOnly, BlueprintReadOnly)
+	float DestroyParticleScale;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UProjectileMovementComponent* ProjectileMovement;
 
@@ -97,6 +103,9 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Debug)
 	FVector PreviousPoint;
+	
+	UPROPERTY(Config, VisibleAnywhere, BlueprintReadOnly)
+	bool bSpawnDestroyedParticle;
 
 protected:
 	UFUNCTION()
@@ -112,9 +121,7 @@ protected:
 	void RocketRotation(float DeltaTime);
 
 	UFUNCTION(BlueprintCallable)
-	void TargetHit();
-
-	
+	virtual void TargetHit();
 
 public:
 	virtual void Tick(float DeltaTime) override;

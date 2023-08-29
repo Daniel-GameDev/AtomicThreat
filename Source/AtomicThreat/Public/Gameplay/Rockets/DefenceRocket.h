@@ -13,6 +13,8 @@ class ATOMICTHREAT_API ADefenceRocket : public ARocketBase
 {
 	GENERATED_BODY()
 public:
+	ADefenceRocket();
+
 	virtual void Destroyed() override;
 
 protected:

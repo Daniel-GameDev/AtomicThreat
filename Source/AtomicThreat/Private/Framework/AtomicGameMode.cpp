@@ -172,3 +172,8 @@ void AAtomicGameMode::EndGame(int32 TotalRounds)
 {
 	LastRound = TotalRounds;
 }
+
+void AAtomicGameMode::StartPlayerCameraShake()
+{
+	MainPlayer->StartCameraShake();
+}

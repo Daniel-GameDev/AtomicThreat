@@ -56,6 +56,9 @@ public:
 	UFUNCTION()
 	virtual void EndGame(int32 TotalRounds) override;
 
+	UFUNCTION()
+	virtual void StartPlayerCameraShake() override;
+
 protected:
 	UPROPERTY()
 	AAtomicPlayerController* MainPlayer;

@@ -25,3 +25,8 @@ void AAtomicPlayerController::CreateUserWidget(TSubclassOf<UUserWidget> Widget)
 		WidgetToCreate->AddToViewport();
 	}
 }
+
+void AAtomicPlayerController::StartCameraShake()
+{
+	PlayerCameraManager->StartCameraShake(AtomicShakeClass);
+}

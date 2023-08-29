@@ -39,6 +39,12 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FVector AmmoDisplayLocation = FVector(-900.f, 0.f, -450.f);
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UParticleSystem* ExplosionParticle;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	float ExplosionScale = 5.f;
+
 	UFUNCTION()
 	void SpawnAtomicPawn(APlayerController* PlayerController);
 

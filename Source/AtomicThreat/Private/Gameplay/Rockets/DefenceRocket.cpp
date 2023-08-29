@@ -3,6 +3,14 @@
 
 #include "Gameplay/Rockets/DefenceRocket.h"
 #include "Gameplay/DefenceExplosion.h"
+#include "Components/CapsuleComponent.h"
+
+ADefenceRocket::ADefenceRocket()
+{
+	PrimaryActorTick.bCanEverTick = true;
+
+	RocketCapsule->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
 
 void ADefenceRocket::Destroyed()
 {
