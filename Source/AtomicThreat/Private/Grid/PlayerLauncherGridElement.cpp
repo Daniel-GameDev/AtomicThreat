@@ -46,9 +46,7 @@ void APlayerLauncherGridElement::SpawnAtomicPawn(APlayerController* PlayerContro
 		NewAtomicPawn->PlayerLauncherGridElement = this;
 		PlayerController->Possess(NewAtomicPawn);
 	}
-
 	UGameplayStatics::FinishSpawningActor(AtomicPawnActor, FTransform(GetActorTransform()));
-
 }
 
 void APlayerLauncherGridElement::RestoreLauncher()
@@ -65,7 +63,6 @@ void APlayerLauncherGridElement::RestoreLauncher()
 		Ammo->ClearAmmo();
 		Ammo->RefillAmmo();
 	}
-		
 }
 
 void APlayerLauncherGridElement::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit)
@@ -73,17 +70,22 @@ void APlayerLauncherGridElement::OnCapsuleBeginOverlap(UPrimitiveComponent* Over
 	Destroyed();
 
 	if (AAtomicGameMode* GameMode = Cast<AAtomicGameMode>(GetWorld()->GetAuthGameMode()))
+	{
 		GameMode->StartPlayerCameraShake();
+	}
 
 	if (GetWorld() && ExplosionParticle)
+	{
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticle, FTransform(GetActorRotation(), GetActorLocation(), FVector(ExplosionScale)));
+	}
 }
 
 void APlayerLauncherGridElement::LaunchRocket(TSubclassOf<ARocketBase> RocketType, FTransform TargetTransform, float DifficultyIncrement, APlayerController* PlayerController)
 {
 	if (Ammo->UseAmmo())
+	{
 		Super::LaunchRocket(RocketType, TargetTransform, DifficultyIncrement, PlayerController);
-
+	}
 }
 
 void APlayerLauncherGridElement::SpawnAmmo()
@@ -95,9 +97,7 @@ void APlayerLauncherGridElement::SpawnAmmo()
 
 		FAttachmentTransformRules TransformRules = FAttachmentTransformRules(EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, false);
 		Ammo->AttachToActor(this, TransformRules);
-
 	}
-	
 }
 
 void APlayerLauncherGridElement::Destroyed()

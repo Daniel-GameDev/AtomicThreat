@@ -13,7 +13,6 @@
 ADefenceExplosion::ADefenceExplosion()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
 }
 
 void ADefenceExplosion::BeginPlay()
@@ -27,7 +26,9 @@ void ADefenceExplosion::BeginPlay()
 	}
 
 	if (AAtomicGameMode* GameMode = Cast<AAtomicGameMode>(GetWorld()->GetAuthGameMode()))
+	{
 		GameMode->StartPlayerCameraShake();
+	}
 
 	if (CurveFloat)
 	{
@@ -37,7 +38,6 @@ void ADefenceExplosion::BeginPlay()
 		CurveTimeline.SetPlayRate(CurveTimeline.GetPlayRate() / Duration);
 		CurveTimeline.Play();
 	}
-	
 }
 
 void ADefenceExplosion::TraceExplosion(float ExpSize)
@@ -49,14 +49,16 @@ void ADefenceExplosion::TraceExplosion(float ExpSize)
 	{
 		int32 Points = 0;
 		if (IPointsInterface* Interface = Cast<IPointsInterface>(HitResult.GetComponent()->GetOwner()))
+		{
 			Points = Interface->GetPoints();
+		}
 
 		if (IPointsInterface* Interface = Cast<IPointsInterface>(PlayerController->GetPlayerState<AAtomicPlayerState>()))
+		{
 			Interface->SetPoints(Points);
-
+		}
 		HitResult.GetComponent()->GetOwner()->Destroy();
 	}
-	
 }
 
 void ADefenceExplosion::Tick(float DeltaTime)
@@ -64,6 +66,5 @@ void ADefenceExplosion::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	CurveTimeline.TickTimeline(DeltaTime);
-
 }
 

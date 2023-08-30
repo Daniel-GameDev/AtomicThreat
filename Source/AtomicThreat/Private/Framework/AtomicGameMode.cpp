@@ -25,7 +25,9 @@ void AAtomicGameMode::NextRound()
 	CityRecovery();
 
 	if (IPointsInterface* Interface = Cast<IPointsInterface>(MainPlayer->PlayerState))
+	{
 		Interface->SetPoints(CityPoints / Bonus + AmmoPoints / Bonus);
+	}
 
 	CityPoints = AmmoPoints = TotalPoints = 0;
 	
@@ -57,17 +59,23 @@ void AAtomicGameMode::AssignCityGrid(AGridBase* CityGridRef)
 		CityGridActors[i]->OnDestroyed.AddDynamic(this, &AAtomicGameMode::OnCityElementDestroyed);
 
 		if (Cast<AGridElementBase>(CityGridActors[i])->bRecoveryRequiresPoints)
+		{
 			CityElementsLeft++;
+		}
 	}
 }
 
 void AAtomicGameMode::OnCityElementDestroyed(AActor* DestroyedActorElement)
 {
 	if (Cast<AGridElementBase>(DestroyedActorElement)->bRecoveryRequiresPoints)
+	{
 		CityElementsLeft--;
+	}
 
 	if (CityElementsLeft == 0)
+	{
 		GameLost();
+	}
 }
 
 void AAtomicGameMode::GameLost()
@@ -88,7 +96,9 @@ void AAtomicGameMode::RoundEnd()
 	TArray<AActor*> CityElements;
 
 	if (IPointsInterface* Interface = Cast<IPointsInterface>(MainPlayer->PlayerState))
+	{
 		PointsFromPlayer = Interface->GetPoints();
+	}
 
 	CityGrid->GetAttachedActors(CityElements);
 
@@ -100,12 +110,16 @@ void AAtomicGameMode::RoundEnd()
 			if (Element->bRecoveryRequiresPoints)
 			{
 				if (IPointsInterface* Interface = Cast<IPointsInterface>(Element))
+				{
 					CityPoints += Interface->GetPoints() * Bonus;
+				}
 			}
 			else
 			{
 				if (IPointsInterface* Interface = Cast<IPointsInterface>(Element))
+				{
 					AmmoPoints += Interface->GetPoints() * Bonus;;
+				}
 			}
 		}
 	}
@@ -113,9 +127,13 @@ void AAtomicGameMode::RoundEnd()
 	TotalPoints = CityPoints + AmmoPoints + PointsFromPlayer;
 
 	if (Round == LastRound)
+	{
 		MainPlayer->CreateUserWidget(MainPlayer->EndGameWidget);
+	}
 	else
+	{
 		MainPlayer->CreateUserWidget(MainPlayer->ScoreResultWidget);
+	}
 }
 
 void AAtomicGameMode::CityRecovery()
@@ -130,9 +148,13 @@ void AAtomicGameMode::CityRecovery()
 	{
 		Element = Cast<AGridElementBase>(CityElements[i]);
 		if (Element->bRecoveryRequiresPoints && Element->bDestroyed)
+		{
 			DestroyedElements.Add(Element);
+		}
 		else if (!Element->bRecoveryRequiresPoints)
+		{
 			Element->Recovery();
+		}
 	}
 	
 	if (TotalPoints >= CityRecoveryPrice && DestroyedElements.IsValidIndex(0))
@@ -152,13 +174,18 @@ void AAtomicGameMode::SetRocketsLeft(int32 RocketsLeft)
 void AAtomicGameMode::TotalRocketsLeft(bool bRocketExists)
 {
 	if (bRocketExists)
+	{
 		TotalRockets++;
+	}
 	else
+	{
 		TotalRockets--;
+	}
 
 	if (TotalRockets == 0 && RocketsLeftInSpawner == 0 && bGameLost == false)
+	{
 		RoundEnd();
-	
+	}
 }
 
 void AAtomicGameMode::EndGame(int32 TotalRounds)

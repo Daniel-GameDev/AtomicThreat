@@ -17,4 +17,5 @@ struct FDifficultyValueStruct : public FTableRowBase
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FRocketStruct> RocketTypes;
+
 };

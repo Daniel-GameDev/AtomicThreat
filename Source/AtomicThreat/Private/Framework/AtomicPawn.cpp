@@ -23,12 +23,13 @@ void AAtomicPawn::Launch()
 {
 	FHitResult HitResult;
 	if (AtomicPlayerController && Rocket)
+	{
 		if (AtomicPlayerController->GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(ECC_GameTraceChannel1), true, HitResult))
 		{
 			FTransform TargetTransform(GetActorRotation(), HitResult.Location);
 			PlayerLauncherGridElement->LaunchRocket(Rocket, TargetTransform, 1.f, AtomicPlayerController);
 		}
-	
+	}
 }
 
 void AAtomicPawn::Tick(float DeltaTime)

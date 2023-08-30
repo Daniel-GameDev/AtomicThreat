@@ -26,11 +26,15 @@ void ASpawnManager::BeginPlay()
 	if (GetWorld())
 	{
 		if (AAtomicGameMode* GameMode = Cast<AAtomicGameMode>(GetWorld()->GetAuthGameMode()))
+		{
 			GameMode->SetSpawnManager(this);
+		}
 
 		TArray<FName> RowNames = DifficultyTable->GetRowNames();
 		if (AAtomicGameMode* GameMode = Cast<AAtomicGameMode>(GetWorld()->GetAuthGameMode()))
-			GameMode->EndGame(RowNames.Num()-1);
+		{
+			GameMode->EndGame(RowNames.Num() - 1);
+		}
 	}
 }
 
@@ -41,16 +45,19 @@ void ASpawnManager::GetRoundData()
 	if (const FDifficultyValueStruct* DifficultyValueStruct = DifficultyTable->FindRow<FDifficultyValueStruct>(RowNames[Round], ""))
 	{
 		for (FRocketStruct TRocketStruct : DifficultyValueStruct->RocketTypes)
+		{
 			RocketsLeft += TRocketStruct.Amount;
+		}
 
 		SpawnTimeArray = GetSpawnTime(RocketsLeft);
 		RocketsToSpawn = DifficultyValueStruct->RocketTypes;
 		DifficultyIncrement = DifficultyValueStruct->DifficultyIncrement;
 
 		if (AAtomicGameMode* GameMode = Cast<AAtomicGameMode>(GetWorld()->GetAuthGameMode()))
+		{
 			GameMode->SetRocketsLeft(RocketsLeft);
+		}
 	}
-
 }
 
 TArray<float> ASpawnManager::GetSpawnTime(int32 RocketAmount)
@@ -58,7 +65,9 @@ TArray<float> ASpawnManager::GetSpawnTime(int32 RocketAmount)
 	TArray<float> Time;
 	
 	for (size_t i = 0; i < RocketAmount; i++)
+	{
 		Time.Add(UKismetMathLibrary::RandomFloatInRange(SpawnTimeMin, SpawnTimeMax));
+	}
 
 	return Time;
 }
@@ -122,22 +131,32 @@ void ASpawnManager::BeginSpawn()
 	{
 		RocketsLeft--;
 		if (AAtomicGameMode* GameMode = Cast<AAtomicGameMode>(GetWorld()->GetAuthGameMode()))
+		{
 			GameMode->SetRocketsLeft(RocketsLeft);
+		}
 
 		if (!SpawnTimeArray.IsValidIndex(0))
+		{
 			GetWorldTimerManager().ClearTimer(SpawnDelayTimerHandle);
+		}
 	}
 	else
+	{
 		TimerValue = UKismetMathLibrary::FClamp(TimerValue + SpawnerLoopFrequencyTime, SpawnTimeMin, SpawnTimeMax);
+	}
 }
 
 void ASpawnManager::SpawnBasedOnGridType(AActor* Launcher, TSubclassOf<ARocketBase> Rocket, FVector Target)
 {
 	if (Rocket.GetDefaultObject()->bMultiRocket)
+	{
 		Cast<ALauncherBaseGridElement>(Launcher)->LaunchMultiRocket(Rocket, Target, CityTargets, DifficultyIncrement);
+	}
+		
 	else
+	{
 		Cast<ALauncherBaseGridElement>(Launcher)->LaunchRocket(Rocket, FTransform(Target), DifficultyIncrement);
-
+	}
 }
 
 void ASpawnManager::StartRound()
@@ -155,12 +174,13 @@ bool ASpawnManager::GetRandomRocketFromRoundData(TSubclassOf<ARocketBase>& Rocke
 		RocketsToSpawn[RandIndex].Amount--;
 
 		if (RocketsToSpawn[RandIndex].Amount == 0)
+		{
 			RocketsToSpawn.RemoveAt(RandIndex);
-			
+		}
+		return true;
 	}
-	else return false;
 
-	return true;
+	return false;
 }
 
 void ASpawnManager::SpawnGameGrids()
@@ -174,11 +194,15 @@ void ASpawnManager::SpawnGameGrids()
 		TArray<AActor*> TempActors;
 		CityGrid->GetAttachedActors(TempActors);
 		for (AActor* TActor : TempActors)
+		{
 			CityTargets.Add(TActor->GetRootComponent()->GetComponentLocation());
+		}
 	}
 
 	if (AAtomicGameMode* GameMode = Cast<AAtomicGameMode>(GetWorld()->GetAuthGameMode()))
+	{
 		GameMode->AssignCityGrid(CityGrid);
+	}
 }
 
 void ASpawnManager::SetNextRound(int32 NewRound)

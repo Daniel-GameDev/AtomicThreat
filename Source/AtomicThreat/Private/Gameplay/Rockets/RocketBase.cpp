@@ -51,7 +51,9 @@ void ARocketBase::BeginPlay()
 	if (GetWorld())
 	{
 		if (AAtomicGameMode* GameMode = Cast<AAtomicGameMode>(GetWorld()->GetAuthGameMode()))
+		{
 			GameMode->TotalRocketsLeft(true);
+		}
 
 		SetProjectileSettings();
 		StartPoint = PreviousPoint = GetActorLocation();
@@ -107,25 +109,37 @@ void ARocketBase::Tick(float DeltaTime)
 	RocketRotation(DeltaTime);
 
 	if (UKismetMathLibrary::EqualEqual_VectorVector(GetActorLocation(), TargetTransform.GetLocation(), ToleranceTargetCoordinate))
+	{
 		TargetHit();
+	}
 
 	if (bDrawDebugLineRocketTrajectory)
+	{
 		DrawDebugLineRocketTrajectory();
+	}
 
 	if (bDrawDebugLineFromStartToEnd)
+	{
 		DrawDebugLineFromStartToEnd();
+	}
 }
 
 void ARocketBase::Destroyed()
 {
 	if (TargetSceneRoot)
+	{
 		TargetSceneRoot->GetOwner()->Destroy();
+	}
 
 	if (AAtomicGameMode* GameMode = Cast<AAtomicGameMode>(GetWorld()->GetAuthGameMode()))
+	{
 		GameMode->TotalRocketsLeft(false);
+	}
 
 	if (GetWorld() && DestroyParticle && bSpawnDestroyedParticle)
+	{
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), DestroyParticle, FTransform(GetActorRotation(), GetActorLocation(), FVector(DestroyParticleScale)));
+	}
 
 	Super::Destroyed();
 }

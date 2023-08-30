@@ -29,7 +29,6 @@ void ALauncherBaseGridElement::LaunchRocket(TSubclassOf<ARocketBase> RocketType,
 			RocketBase->SetActorRotation(LaunchPoint->GetComponentRotation());
 			RocketBase->SetProjectileSettings();
 		}
-
 		UGameplayStatics::FinishSpawningActor(RocketActor, FTransform(Location));
 	}
 }
@@ -47,7 +46,6 @@ void ALauncherBaseGridElement::LaunchMultiRocket(TSubclassOf<ARocketBase> Rocket
 			RocketBase->DifficultyIncrement = DifficultyIncrement;
 			RocketBase->TargetVectors = TargetVectors;
 		}
-
 		UGameplayStatics::FinishSpawningActor(RocketActor, FTransform(Location));
 	}
 }

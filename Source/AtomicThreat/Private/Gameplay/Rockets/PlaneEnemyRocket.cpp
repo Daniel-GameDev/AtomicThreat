@@ -13,7 +13,6 @@ APlaneEnemyRocket::APlaneEnemyRocket()
 
 	SecondNiagaraComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("SecondNiagaraComponent"));
 	SecondNiagaraComponent->SetupAttachment(RocketForward);
-
 }
 
 void APlaneEnemyRocket::BeginDecay()

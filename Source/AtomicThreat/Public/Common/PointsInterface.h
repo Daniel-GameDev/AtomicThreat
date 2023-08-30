@@ -22,4 +22,5 @@ public:
 
 	UFUNCTION()
 	virtual void SetPoints(int32 NewPoints) = 0;
+
 };

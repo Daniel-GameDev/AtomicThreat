@@ -37,7 +37,9 @@ AAmmo::AAmmo()
 bool AAmmo::UseAmmo()
 {
 	if (!Rockets.IsValidIndex(0))
+	{
 		return false;
+	}
 
 	Rockets.Last()->DestroyComponent();
 	Rockets.RemoveSingle(Rockets.Last());
@@ -84,8 +86,9 @@ void AAmmo::RefillAmmo()
 void AAmmo::ClearAmmo()
 {
 	for (UStaticMeshComponent* TRocket : Rockets)
+	{
 		TRocket->DestroyComponent();
-
+	}
 	Rockets.Empty();
 }
 

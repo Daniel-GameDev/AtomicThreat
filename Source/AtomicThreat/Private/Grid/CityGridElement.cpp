@@ -36,21 +36,26 @@ ACityGridElement::ACityGridElement()
 void ACityGridElement::Recovery()
 {
 	if (bDestroyed)
+	{
 		RestoreCity();
+	}
 }
 
-void ACityGridElement::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
-	UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit)
+void ACityGridElement::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit)
 {
 	if (GetWorld() && ExplosionParticle)
 	{
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticle, FTransform(GetActorRotation(), GetActorLocation(), FVector(ExplosionScale)));
 		if (AAtomicGameMode* GameMode = Cast<AAtomicGameMode>(GetWorld()->GetAuthGameMode()))
+		{
 			GameMode->StartPlayerCameraShake();
+		}
 	}
 
 	if (!bDestroyed)
+	{
 		Destroyed();
+	}
 }
 
 void ACityGridElement::RestoreCity()
