@@ -5,8 +5,7 @@
 #include "Components/TimelineComponent.h"
 #include "Common/PointsInterface.h"
 #include "Framework/AtomicPlayerState.h"
-#include "Common/AtomicGameModeInterface.h"
-#include "GameFramework/GameModeBase.h"
+#include "Framework/AtomicGameMode.h"
 #include "Particles/ParticleSystem.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -27,8 +26,8 @@ void ADefenceExplosion::BeginPlay()
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticle, FTransform(FRotator(), GetActorLocation(), FVector(ExplosionScale)));
 	}
 
-	if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
-		Interface->StartPlayerCameraShake();
+	if (AAtomicGameMode* GameMode = Cast<AAtomicGameMode>(GetWorld()->GetAuthGameMode()))
+		GameMode->StartPlayerCameraShake();
 
 	if (CurveFloat)
 	{

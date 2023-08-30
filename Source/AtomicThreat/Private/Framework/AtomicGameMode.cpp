@@ -1,13 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Framework/AtomicGameMode.h"
 #include "Gameplay/SpawnManager.h"
 #include "Grid/GridBase.h"
 #include "Grid/GridElementBase.h"
 #include "Framework/AtomicPlayerController.h"
 #include "Common/PointsInterface.h"
-#include "GameFramework/PlayerState.h"
 #include "Framework/AtomicPlayerState.h"
 
 void AAtomicGameMode::BeginGame()
@@ -43,7 +41,7 @@ void AAtomicGameMode::NextRound()
 	SpawnManager->StartRound();
 }
 
-void AAtomicGameMode::AssignSpawnManager(ASpawnManager* SpawnManagerRef)
+void AAtomicGameMode::SetSpawnManager(ASpawnManager* SpawnManagerRef)
 {
 	SpawnManager = SpawnManagerRef;
 }
@@ -58,14 +56,14 @@ void AAtomicGameMode::AssignCityGrid(AGridBase* CityGridRef)
 	{
 		CityGridActors[i]->OnDestroyed.AddDynamic(this, &AAtomicGameMode::OnCityElementDestroyed);
 
-		if (Cast<AGridElementBase>(CityGridActors[i])->bRecoveryRequiresPoints) // check here
+		if (Cast<AGridElementBase>(CityGridActors[i])->bRecoveryRequiresPoints)
 			CityElementsLeft++;
 	}
 }
 
 void AAtomicGameMode::OnCityElementDestroyed(AActor* DestroyedActorElement)
 {
-	if (Cast<AGridElementBase>(DestroyedActorElement)->bRecoveryRequiresPoints) // check here
+	if (Cast<AGridElementBase>(DestroyedActorElement)->bRecoveryRequiresPoints)
 		CityElementsLeft--;
 
 	if (CityElementsLeft == 0)
@@ -146,7 +144,7 @@ void AAtomicGameMode::CityRecovery()
 	}
 }
 
-void AAtomicGameMode::SpawnerRocketsLeft(int32 RocketsLeft)
+void AAtomicGameMode::SetRocketsLeft(int32 RocketsLeft)
 {
 	RocketsLeftInSpawner = RocketsLeft;
 }

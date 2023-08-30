@@ -7,8 +7,7 @@
 #include "Gameplay/TargetBase.h"
 #include "DrawDebugHelpers.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "Common/AtomicGameModeInterface.h"
-#include "GameFramework/GameModeBase.h"
+#include "Framework/AtomicGameMode.h"
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraComponent.h"
 #include "Particles/ParticleSystem.h"
@@ -51,8 +50,8 @@ void ARocketBase::BeginPlay()
 
 	if (GetWorld())
 	{
-		if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
-			Interface->TotalRocketsLeft(true);
+		if (AAtomicGameMode* GameMode = Cast<AAtomicGameMode>(GetWorld()->GetAuthGameMode()))
+			GameMode->TotalRocketsLeft(true);
 
 		SetProjectileSettings();
 		StartPoint = PreviousPoint = GetActorLocation();
@@ -122,8 +121,8 @@ void ARocketBase::Destroyed()
 	if (TargetSceneRoot)
 		TargetSceneRoot->GetOwner()->Destroy();
 
-	if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
-		Interface->TotalRocketsLeft(false);
+	if (AAtomicGameMode* GameMode = Cast<AAtomicGameMode>(GetWorld()->GetAuthGameMode()))
+		GameMode->TotalRocketsLeft(false);
 
 	if (GetWorld() && DestroyParticle && bSpawnDestroyedParticle)
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), DestroyParticle, FTransform(GetActorRotation(), GetActorLocation(), FVector(DestroyParticleScale)));

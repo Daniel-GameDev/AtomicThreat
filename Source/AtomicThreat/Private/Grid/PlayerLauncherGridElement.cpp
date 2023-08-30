@@ -6,8 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Gameplay/Ammo.h"
 #include "Components/CapsuleComponent.h"
-#include "Common/AtomicGameModeInterface.h"
-#include "GameFramework/GameModeBase.h"
+#include "Framework/AtomicGameMode.h"
 #include "Particles/ParticleSystem.h"
 #include "Particles/ParticleSystemComponent.h"
 
@@ -73,8 +72,8 @@ void APlayerLauncherGridElement::OnCapsuleBeginOverlap(UPrimitiveComponent* Over
 {
 	Destroyed();
 
-	if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
-		Interface->StartPlayerCameraShake();
+	if (AAtomicGameMode* GameMode = Cast<AAtomicGameMode>(GetWorld()->GetAuthGameMode()))
+		GameMode->StartPlayerCameraShake();
 
 	if (GetWorld() && ExplosionParticle)
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionParticle, FTransform(GetActorRotation(), GetActorLocation(), FVector(ExplosionScale)));

@@ -15,11 +15,6 @@ class ATOMICTHREAT_API AEnemyRocket : public ARocketBase, public IPointsInterfac
 public:
 	AEnemyRocket();
 
-	UFUNCTION()
-	void OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-		UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit);
-	
-
 	// Inherited via IPointsInterface
 	virtual int32 GetPoints() override;
 

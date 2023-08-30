@@ -15,17 +15,18 @@ class ATOMICTHREAT_API AAtomicPlayerState : public APlayerState, public IPointsI
 	GENERATED_BODY()
 
 public:
-		// Inherited via IPointsInterface
-	virtual int32 GetPoints() override;
-
-	virtual void SetPoints(int32 NewPoints) override;
-
 	UPROPERTY()
 	AAtomicPlayerController* CurrentPlayer;
 
 	UFUNCTION()
 	void SetBonus(int32 BonusValue);
 
+		// Inherited via IPointsInterface
+	FORCEINLINE virtual int32 GetPoints() override { return Points; };
+
+	FORCEINLINE virtual void SetPoints(int32 NewPoints) override { Points += NewPoints * Bonus; };
+
+protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	int32 Points;
 

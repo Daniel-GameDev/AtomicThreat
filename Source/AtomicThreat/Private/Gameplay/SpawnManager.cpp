@@ -9,8 +9,7 @@
 #include "Gameplay/Rockets/RocketBase.h"
 #include "Grid/LauncherBaseGridElement.h"
 #include "Kismet/GameplayStatics.h"
-#include "GameFramework/GameModeBase.h" //TODO AtomicGameMode
-#include "Common/AtomicGameModeInterface.h" //TODO Delete
+#include "Framework/AtomicGameMode.h"
 
 ASpawnManager::ASpawnManager()
 {
@@ -26,12 +25,12 @@ void ASpawnManager::BeginPlay()
 	
 	if (GetWorld())
 	{
-		if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
-			Interface->AssignSpawnManager(this);
+		if (AAtomicGameMode* GameMode = Cast<AAtomicGameMode>(GetWorld()->GetAuthGameMode()))
+			GameMode->SetSpawnManager(this);
 
 		TArray<FName> RowNames = DifficultyTable->GetRowNames();
-		if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
-			Interface->EndGame(RowNames.Num()-1);
+		if (AAtomicGameMode* GameMode = Cast<AAtomicGameMode>(GetWorld()->GetAuthGameMode()))
+			GameMode->EndGame(RowNames.Num()-1);
 	}
 }
 
@@ -48,8 +47,8 @@ void ASpawnManager::GetRoundData()
 		RocketsToSpawn = DifficultyValueStruct->RocketTypes;
 		DifficultyIncrement = DifficultyValueStruct->DifficultyIncrement;
 
-		if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
-			Interface->SpawnerRocketsLeft(RocketsLeft);
+		if (AAtomicGameMode* GameMode = Cast<AAtomicGameMode>(GetWorld()->GetAuthGameMode()))
+			GameMode->SetRocketsLeft(RocketsLeft);
 	}
 
 }
@@ -122,8 +121,8 @@ void ASpawnManager::BeginSpawn()
 	if (bRocketSpawned)
 	{
 		RocketsLeft--;
-		if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
-			Interface->SpawnerRocketsLeft(RocketsLeft);
+		if (AAtomicGameMode* GameMode = Cast<AAtomicGameMode>(GetWorld()->GetAuthGameMode()))
+			GameMode->SetRocketsLeft(RocketsLeft);
 
 		if (!SpawnTimeArray.IsValidIndex(0))
 			GetWorldTimerManager().ClearTimer(SpawnDelayTimerHandle);
@@ -178,8 +177,8 @@ void ASpawnManager::SpawnGameGrids()
 			CityTargets.Add(TActor->GetRootComponent()->GetComponentLocation());
 	}
 
-	if (IAtomicGameModeInterface* Interface = Cast<IAtomicGameModeInterface>(GetWorld()->GetAuthGameMode()))
-		Interface->AssignCityGrid(CityGrid);
+	if (AAtomicGameMode* GameMode = Cast<AAtomicGameMode>(GetWorld()->GetAuthGameMode()))
+		GameMode->AssignCityGrid(CityGrid);
 }
 
 void ASpawnManager::SetNextRound(int32 NewRound)

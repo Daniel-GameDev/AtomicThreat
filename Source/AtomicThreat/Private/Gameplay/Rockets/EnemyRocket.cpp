@@ -7,13 +7,7 @@
 AEnemyRocket::AEnemyRocket()
 {
 	RocketCapsule->SetCollisionProfileName(FName("EnemyCollision"));
-	RocketCapsule->OnComponentBeginOverlap.AddDynamic(this, &AEnemyRocket::OnCapsuleBeginOverlap);
-}
 
-void AEnemyRocket::OnCapsuleBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
-	UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Hit)
-{
-	Destroy();
 }
 
 int32 AEnemyRocket::GetPoints()

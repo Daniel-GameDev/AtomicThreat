@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "Common/AtomicGameModeInterface.h"
 #include "AtomicGameMode.generated.h"
 
 class ASpawnManager;
@@ -12,16 +11,13 @@ class AGridBase;
 class AAtomicPlayerController;
 
 UCLASS()
-class ATOMICTHREAT_API AAtomicGameMode : public AGameModeBase, public IAtomicGameModeInterface
+class ATOMICTHREAT_API AAtomicGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 	
 public:
 	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
 	int32 Round;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	int32 RocketsLeftInSpawner;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	int32 AmmoPoints;
@@ -35,29 +31,26 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void BeginGame();
 
-	/*UFUNCTION(BlueprintCallable)
-	void StartRound();*/
-
 	UFUNCTION(BlueprintCallable)
 	void NextRound();
 
 	UFUNCTION()
-	virtual void AssignSpawnManager(ASpawnManager* SpawnManagerRef) override; //TODO Delete interface - make getter / setter
+	void SetSpawnManager(ASpawnManager* SpawnManagerRef);
 
 	UFUNCTION()
-	virtual void AssignCityGrid(AGridBase* CityGridRef) override;
+	void AssignCityGrid(AGridBase* CityGridRef);
 
 	UFUNCTION()
-	virtual void SpawnerRocketsLeft(int32 RocketLeft) override;
+	void SetRocketsLeft(int32 RocketLeft);
 
 	UFUNCTION()
-	virtual void TotalRocketsLeft(bool bRocketExists) override;
+	void TotalRocketsLeft(bool bRocketExists);
 
 	UFUNCTION()
-	virtual void EndGame(int32 TotalRounds) override;
+	void EndGame(int32 TotalRounds);
 
 	UFUNCTION()
-	virtual void StartPlayerCameraShake() override;
+	void StartPlayerCameraShake();
 
 protected:
 	UPROPERTY()
@@ -74,6 +67,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	int32 CityRecoveryPrice;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	int32 RocketsLeftInSpawner;
 
 	UPROPERTY()
 	int32 CityElementsLeft;
