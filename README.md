@@ -5,7 +5,7 @@ Unreal Engine 4.27.2
 Gameplay:
 ===============
 The goal is to shoot down enemy missiles by pressing LMB along the flight path of an enemy target, defend cities, score as many points as possible, go through 31 rounds, finish the game with the most points scored.
-===============
+
 Technical Description:
 ===============
 The main game logic is written in C++, the following classes are implemented:
