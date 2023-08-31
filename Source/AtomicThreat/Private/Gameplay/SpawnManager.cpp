@@ -44,13 +44,18 @@ void ASpawnManager::GetRoundData()
 
 	if (const FDifficultyValueStruct* DifficultyValueStruct = DifficultyTable->FindRow<FDifficultyValueStruct>(RowNames[Round], ""))
 	{
+		RocketsToSpawn.Empty();
 		for (FRocketStruct TRocketStruct : DifficultyValueStruct->RocketTypes)
 		{
 			RocketsLeft += TRocketStruct.Amount;
-		}
 
+			if (TRocketStruct.Amount != 0)
+			{
+				RocketsToSpawn.Add(TRocketStruct);
+			}
+		}
+		
 		SpawnTimeArray = GetSpawnTime(RocketsLeft);
-		RocketsToSpawn = DifficultyValueStruct->RocketTypes;
 		DifficultyIncrement = DifficultyValueStruct->DifficultyIncrement;
 
 		if (AAtomicGameMode* GameMode = Cast<AAtomicGameMode>(GetWorld()->GetAuthGameMode()))
@@ -173,7 +178,7 @@ bool ASpawnManager::GetRandomRocketFromRoundData(TSubclassOf<ARocketBase>& Rocke
 		RocketClass = RocketsToSpawn[RandIndex].RocketType;
 		RocketsToSpawn[RandIndex].Amount--;
 
-		if (RocketsToSpawn[RandIndex].Amount == 0)
+		if (RocketsToSpawn[RandIndex].Amount <= 0)
 		{
 			RocketsToSpawn.RemoveAt(RandIndex);
 		}
