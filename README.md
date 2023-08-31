@@ -9,6 +9,7 @@ The goal is to shoot down enemy missiles by pressing LMB along the flight path o
 Technical Description:
 ===============
 The main game logic is written in C++, the following classes are implemented:
+
 -AtomicGameMode - responsible for the game session rules, the round order, determining the main player, monitors the number of rockets on the scene and in the SpawnManager.
 
 -AtomicPawn - spawns with the player launcher, passing control from the AtomicPlayerController to the PlayerLauncherGridElement.
