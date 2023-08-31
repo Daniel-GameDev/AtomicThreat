@@ -34,7 +34,7 @@ void AMultiEnemyRocket::SpawnRockets(bool bDestroyAfterSpawn)
 			{
 				int32 RandTargetIndex = FMath::RandRange(0, TargetVectors.Num() - 1);
 				RocketBase->TargetTransform.SetLocation(TargetVectors[RandTargetIndex]);
-				RocketBase->DifficultyIncrement = DifficultyIncrement;
+				RocketBase->DifficultyIncrement = DifficultyIncrement; 
 				if (RocketBase->bMultiRocket)
 				{
 					RocketBase->TargetVectors = Targets;
