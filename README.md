@@ -14,25 +14,25 @@ The main game logic is written in C++, the following classes are implemented:
 
 -AtomicPawn - spawns with the player launcher, passing control from the AtomicPlayerController to the PlayerLauncherGridElement.
 
--AtomicPlayerController - adds UMG to the player's Screen Space, initiates camera shake.
+-AtomicPlayerController - add UMG to the player's Screen Space, initiates camera shake.
 
 -AtomicPlayerState - keeps the earned points of the main player during one game session.
 
 -RocketBase - the base class of the rocket, has a ProjectileMovement component, creates a Target Class at the specified coordinates and flies to it, upon reaching the target destroys itself and the Target Class.
 
---DefenceRocket - inherited from RocketBase, the rocket that the player launches, upon reaching the target creates a DefenseExplosion in place of the target (SpehreTrace that gets points from the targets it hits and destroys them).
+--DefenceRocket - inherited from RocketBase, the rocket that the player launches, upon reaching the target creates a DefenseExplosion in place of the target (Sphere Trace that gets points from the targets it hits and destroys them).
 
 --EnemyRocket - inherited from RocketBase, destroys the player's cities.
 
---MultiEnemyRocket - inherited from RocketBase, the spawner of EnemyRockets, when the decay time is reached begins spawning random amount of EnemyRockets and destroys itself.
+--MultiEnemyRocket - inherited from RocketBase, the spawner of EnemyRockets, when the decay time is reached begins spawning a random amount of EnemyRockets and destroys itself.
 
 ---PlaneEnemyRocket - inherited from MultiEnemyRocket, is a MultiEnemyRocket spawner, when the decay time is reached creates one MultiEnemyRocket.
 
 -DefenceExplosion - creates a temporary SphereTrace at self world location, which disappears after the time specified in Class Defaults.
 
--GridBase - a grid that can create the specified number of GridElementBase Subclassess at scene, can be a platform for creating and holding any GridElement type.
+-GridBase - a grid that can create the specified number of GridElementBase Subclasses at scene, can be a platform for creating and holding any GridElement type.
 
--GridElementBase - the base grid element which can be used as platform for any gameplay elements that can be managed by GridBase.
+-GridElementBase - the base grid element which can be used as a platform for any gameplay elements that can be managed by GridBase.
 
 --CityGridElement - inherited from GridElementBase, a game element which is essentially the player's health amount, if destroyed can be restored by AtomicGameMode if the player has 10000 points, each subsequent city recovery will cost 10000*(Recovery Nums).
 
