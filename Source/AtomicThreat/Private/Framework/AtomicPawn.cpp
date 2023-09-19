@@ -9,7 +9,6 @@
 AAtomicPawn::AAtomicPawn()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
 }
 
 void AAtomicPawn::BeginPlay()
@@ -35,7 +34,6 @@ void AAtomicPawn::Launch()
 void AAtomicPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void AAtomicPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -43,6 +41,5 @@ void AAtomicPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	PlayerInputComponent->BindAction("Launch", IE_Pressed, this, &AAtomicPawn::Launch);
-
 }
 

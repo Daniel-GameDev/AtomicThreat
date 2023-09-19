@@ -23,4 +23,5 @@ protected:
 
 	UFUNCTION()
 	void SpawnExplosion();
+
 };

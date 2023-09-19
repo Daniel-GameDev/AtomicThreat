@@ -157,7 +157,6 @@ void ASpawnManager::SpawnBasedOnGridType(AActor* Launcher, TSubclassOf<ARocketBa
 	{
 		Cast<ALauncherBaseGridElement>(Launcher)->LaunchMultiRocket(Rocket, Target, CityTargets, DifficultyIncrement);
 	}
-		
 	else
 	{
 		Cast<ALauncherBaseGridElement>(Launcher)->LaunchRocket(Rocket, FTransform(Target), DifficultyIncrement);
@@ -218,6 +217,5 @@ void ASpawnManager::SetNextRound(int32 NewRound)
 void ASpawnManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 

@@ -24,19 +24,19 @@ public:
 	bool bRecoveryRequiresPoints;
 
 	UFUNCTION()
-	virtual void Recovery();
+	virtual void Recovery() PURE_VIRTUAL(AGridElementBase::Recovery, );
 
 protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	USceneComponent* SceneRoot;
+	TObjectPtr<USceneComponent> SceneRoot;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UStaticMeshComponent* GridMesh;
+	TObjectPtr<UStaticMeshComponent> GridMesh;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UParticleSystemComponent* DestroyedParticle;
+	TObjectPtr<UParticleSystemComponent> DestroyedParticle;
 
 public:
 	virtual void Tick(float DeltaTime) override;

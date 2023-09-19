@@ -15,13 +15,14 @@ class ATOMICTHREAT_API AEnemyRocket : public ARocketBase, public IPointsInterfac
 public:
 	AEnemyRocket();
 
-	// Inherited via IPointsInterface
-	virtual int32 GetPoints() override;
-
-	FORCEINLINE virtual void SetPoints(int32 NewPoints) override {}
-
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	int32 Points;
+
+public:
+	// Inherited via IPointsInterface
+	FORCEINLINE virtual int32 GetPoints() override { return Points; };
+
+	FORCEINLINE virtual void SetPoints(int32 NewPoints) override {}
 
 };

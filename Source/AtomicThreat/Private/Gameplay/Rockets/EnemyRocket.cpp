@@ -8,8 +8,3 @@ AEnemyRocket::AEnemyRocket()
 {
 	RocketCapsule->SetCollisionProfileName(FName("EnemyCollision"));
 }
-
-int32 AEnemyRocket::GetPoints()
-{
-	return Points;
-}

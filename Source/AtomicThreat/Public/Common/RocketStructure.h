@@ -17,5 +17,4 @@ struct FRocketStruct
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 Amount;
-
 };

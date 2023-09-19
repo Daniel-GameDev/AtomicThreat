@@ -36,7 +36,7 @@ public:
 	TArray<FVector> TargetVectors;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	APlayerController* PlayerController;
+	TObjectPtr<APlayerController> PlayerController;
 
 	UFUNCTION()
 	void SetProjectileSettings();
@@ -45,31 +45,31 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	USceneComponent* SceneRoot;
+	TObjectPtr<USceneComponent> SceneRoot;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UArrowComponent* RocketForward;
+	TObjectPtr<UArrowComponent> RocketForward;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UStaticMeshComponent* RocketMesh;
+	TObjectPtr<UStaticMeshComponent> RocketMesh;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	USkeletalMeshComponent* RocketSkeletalMesh;
+	TObjectPtr<USkeletalMeshComponent> RocketSkeletalMesh;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UCapsuleComponent* RocketCapsule;
+	TObjectPtr<UCapsuleComponent> RocketCapsule;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UNiagaraComponent* NiagaraComponent;
+	TObjectPtr<UNiagaraComponent> NiagaraComponent;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UParticleSystem* DestroyParticle;
+	TObjectPtr<UParticleSystem> DestroyParticle;
 
 	UPROPERTY(Config, EditDefaultsOnly, BlueprintReadOnly)
 	float DestroyParticleScale;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UProjectileMovementComponent* ProjectileMovement;
+	TObjectPtr<UProjectileMovementComponent> ProjectileMovement;
 
 	UPROPERTY(Config, EditDefaultsOnly, BlueprintReadOnly, Category = RocketSettings)
 	float InitialSpeed;
@@ -90,7 +90,7 @@ protected:
 	TSubclassOf<ATargetBase> Target;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Target)
-	USceneComponent* TargetSceneRoot;
+	TObjectPtr<USceneComponent> TargetSceneRoot;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Debug)
 	bool bDrawDebugLineRocketTrajectory;

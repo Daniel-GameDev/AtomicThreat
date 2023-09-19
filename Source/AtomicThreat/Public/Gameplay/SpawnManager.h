@@ -25,22 +25,22 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	AGridBase* CityGrid;
+	TObjectPtr<AGridBase> CityGrid;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	AGridBase* UpperEnemyGrid;
+	TObjectPtr<AGridBase> UpperEnemyGrid;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	AGridBase* RightEnemyGrid;
+	TObjectPtr<AGridBase> RightEnemyGrid;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	AGridBase* LeftEnemyGrid;
+	TObjectPtr<AGridBase> LeftEnemyGrid;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	int32 Round;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UDataTable* DifficultyTable;
+	TObjectPtr<UDataTable> DifficultyTable;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Spawner)
 	float SpawnTimeMax = 5.f;
@@ -73,7 +73,7 @@ protected:
 	TArray<FVector> CityTargets;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UStaticMeshComponent* StaticMesh;
+	TObjectPtr<UStaticMeshComponent> StaticMesh;
 
 	UFUNCTION()
 	void GetRoundData();

@@ -16,10 +16,10 @@ public:
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	UStaticMeshComponent* AttachedRocketMesh;
+	TObjectPtr<UStaticMeshComponent> AttachedRocketMesh;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UNiagaraComponent* SecondNiagaraComponent;
+	TObjectPtr<UNiagaraComponent> SecondNiagaraComponent;
 
 	virtual void BeginDecay() override;
 
@@ -27,7 +27,7 @@ protected:
 
 public:
 	// Inherited via IPointsInterface
-	virtual int32 GetPoints() override;
+	FORCEINLINE virtual int32 GetPoints() override { return Points; };
 
 	FORCEINLINE virtual void SetPoints(int32 NewPoints) override {};
 };

@@ -25,10 +25,10 @@ public:
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UStaticMeshComponent* DestroyedLauncherMesh;
+	TObjectPtr<UStaticMeshComponent> DestroyedLauncherMesh;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UCapsuleComponent* LauncherCapsule;
+	TObjectPtr<UCapsuleComponent> LauncherCapsule;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSubclassOf<AAtomicPawn> AtomicPawn;
@@ -40,7 +40,7 @@ protected:
 	FVector AmmoDisplayLocation = FVector(-900.f, 0.f, -450.f);
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UParticleSystem* ExplosionParticle;
+	TObjectPtr<UParticleSystem> ExplosionParticle;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	float ExplosionScale = 5.f;
@@ -63,7 +63,7 @@ public:
 	virtual void Destroyed() override;
 
 	// Inherited via IPointsInterface
-	FORCEINLINE virtual int32 GetPoints() override;
+	virtual int32 GetPoints() override;
 
 	FORCEINLINE virtual void SetPoints(int32 NewPoints) override {};
 

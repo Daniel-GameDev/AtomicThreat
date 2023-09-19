@@ -14,12 +14,10 @@ ATargetBase::ATargetBase()
 void ATargetBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 void ATargetBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 

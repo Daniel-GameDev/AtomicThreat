@@ -2,8 +2,3 @@
 
 
 #include "Framework/AtomicPlayerState.h"
-
-void AAtomicPlayerState::SetBonus(int32 BonusValue)
-{
-    Bonus = BonusValue;
-}

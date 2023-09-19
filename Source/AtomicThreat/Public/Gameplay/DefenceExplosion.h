@@ -16,7 +16,7 @@ public:
 	ADefenceExplosion();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	APlayerController* PlayerController;
+	TObjectPtr<APlayerController> PlayerController;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	FVector ExplosionCoordinate;
@@ -31,10 +31,10 @@ protected:
 	float Duration = 3.f;
 
 	UPROPERTY(EditAnywhere, Category = Timeline)
-	UCurveFloat* CurveFloat;
+	TObjectPtr<UCurveFloat> CurveFloat;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UParticleSystem* ExplosionParticle;
+	TObjectPtr<UParticleSystem> ExplosionParticle;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	float SizeDevider = 100.f;
@@ -44,6 +44,9 @@ protected:
 
 	UFUNCTION()
 	void TraceExplosion(float ExpSize);
+
+	UFUNCTION()
+	void TraceExplosionFinished();
 
 public:
 	virtual void Tick(float DeltaTime) override;

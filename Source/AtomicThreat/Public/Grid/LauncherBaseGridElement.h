@@ -18,10 +18,10 @@ public:
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UStaticMeshComponent* RocketLauncherMesh;
+	TObjectPtr<UStaticMeshComponent> RocketLauncherMesh;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	USceneComponent* LaunchPoint;
+	TObjectPtr<USceneComponent> LaunchPoint;
 
 public:
 	UFUNCTION(BlueprintCallable)

@@ -18,7 +18,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	USceneComponent* SceneRoot;
+	TObjectPtr<USceneComponent> SceneRoot;
 
 public:	
 	virtual void Tick(float DeltaTime) override;

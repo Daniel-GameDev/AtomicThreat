@@ -54,13 +54,13 @@ public:
 
 protected:
 	UPROPERTY()
-	AAtomicPlayerController* MainPlayer;
+	TObjectPtr<AAtomicPlayerController> MainPlayer;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	ASpawnManager* SpawnManager;
+	TObjectPtr<ASpawnManager> SpawnManager;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	AGridBase* CityGrid;
+	TObjectPtr<AGridBase> CityGrid;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 DefaultCityRecoveryPrice = 10000;

@@ -7,40 +7,32 @@
 AGridBase::AGridBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
 }
 
 void AGridBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 void AGridBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void AGridBase::CreateBaseGird()
 {
-	float Spacing = 0.f;
-
+	FVector SpawnLocation = FVector(0);
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.Owner = this;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
-	FAttachmentTransformRules TransformRules = FAttachmentTransformRules(EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, false);
-	FVector ActorLocation;
+	FAttachmentTransformRules TransformRules = FAttachmentTransformRules(EAttachmentRule::KeepRelative, false);
 
 	for (TSubclassOf<AGridElementBase> TGridElement : GridElementsToSpawn)
 	{
 		if (TGridElement)
 		{
-			AGridElementBase* NewGridElement = GetWorld()->SpawnActor<AGridElementBase>(TGridElement, FVector(ActorLocation.X, ActorLocation.Y + Spacing, ActorLocation.Z), GetActorRotation(), SpawnParams);
-			Spacing = GridSpacing;
-
-			ActorLocation = NewGridElement->GetActorLocation();
+			AGridElementBase* NewGridElement = GetWorld()->SpawnActor<AGridElementBase>(TGridElement, SpawnLocation, GetActorRotation(), SpawnParams);
+			SpawnLocation = FVector(0, SpawnLocation.Y + GridSpacingY, SpawnLocation.Z - GridSpacingZ);
 			NewGridElement->AttachToActor(this, TransformRules);
 		}
 	}

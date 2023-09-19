@@ -64,7 +64,6 @@ void ACityGridElement::RestoreCity()
 	DefaultCityMesh->SetVisibility(true);
 	DestroyedCityMesh->SetVisibility(false);
 	DestroyedParticle->SetHiddenInGame(true);
-
 }
 
 void ACityGridElement::Destroyed()
@@ -74,10 +73,4 @@ void ACityGridElement::Destroyed()
 	DestroyedCityMesh->SetVisibility(true);
 	DestroyedParticle->SetHiddenInGame(false);
 	Super::Destroyed();
-
-}
-
-int32 ACityGridElement::GetPoints()
-{
-	return Points;
 }

@@ -8,7 +8,7 @@
 
 class AGridElementBase;
 
-UCLASS(Config = Game, BlueprintType)
+UCLASS()
 class ATOMICTHREAT_API AGridBase : public AActor
 {
 	GENERATED_BODY()
@@ -22,8 +22,11 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = GridSettings)
 	TArray<TSubclassOf<AGridElementBase>> GridElementsToSpawn;
 
-	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = GridSettings)
-	float GridSpacing;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = GridSettings)
+	float GridSpacingY;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = GridSettings)
+	float GridSpacingZ;
 
 public:
 	virtual void Tick(float DeltaTime) override;

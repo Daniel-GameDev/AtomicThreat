@@ -19,10 +19,10 @@ public:
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	USceneComponent* MeshScene;
+	TObjectPtr<USceneComponent> MeshScene;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UStaticMeshComponent* TargetMesh;
+	TObjectPtr<UStaticMeshComponent> TargetMesh;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	float RollValue = 200.f;
@@ -32,4 +32,5 @@ protected:
 
 public:
 	virtual void Tick(float DeltaTime) override;
+
 };

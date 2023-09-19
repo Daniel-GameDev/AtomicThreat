@@ -30,8 +30,7 @@ AAmmo::AAmmo()
 
 	Odd = CreateDefaultSubobject<USceneComponent>(TEXT("Odd"));
 	Odd->SetupAttachment(SceneRoot);
-	Odd->SetRelativeLocation(FVector(0.f, -280.f, 100.f));
-	
+	Odd->SetRelativeLocation(FVector(0.f, -280.f, 100.f));	
 }
 
 bool AAmmo::UseAmmo()
@@ -100,6 +99,5 @@ int32 AAmmo::AmmoLeft()
 void AAmmo::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 

@@ -21,16 +21,16 @@ public:
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UStaticMeshComponent* DefaultCityMesh;
+	TObjectPtr<UStaticMeshComponent> DefaultCityMesh;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UStaticMeshComponent* DestroyedCityMesh;
+	TObjectPtr<UStaticMeshComponent> DestroyedCityMesh;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UCapsuleComponent* CityCapsule;
+	TObjectPtr<UCapsuleComponent> CityCapsule;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UParticleSystem* ExplosionParticle;
+	TObjectPtr<UParticleSystem> ExplosionParticle;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	float ExplosionScale = 3.f;
@@ -45,7 +45,8 @@ public:
 	virtual void Destroyed() override;
 
 	// Inherited via IPointsInterface
-	virtual int32 GetPoints() override;
+	FORCEINLINE virtual int32 GetPoints() override { return Points; }
 
 	FORCEINLINE virtual void SetPoints(int32 NewPoints) override {}
+	
 };

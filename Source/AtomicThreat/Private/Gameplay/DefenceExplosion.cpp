@@ -33,9 +33,12 @@ void ADefenceExplosion::BeginPlay()
 	if (CurveFloat)
 	{
 		FOnTimelineFloat TraceExplosion;
+		FOnTimelineEventStatic TimelineFinished;
 		TraceExplosion.BindUFunction(this, FName("TraceExplosion"));
+		TimelineFinished.BindUFunction(this, FName("TraceExplosionFinished"));
 		CurveTimeline.AddInterpFloat(CurveFloat, TraceExplosion);
 		CurveTimeline.SetPlayRate(CurveTimeline.GetPlayRate() / Duration);
+		CurveTimeline.SetTimelineFinishedFunc(TimelineFinished);
 		CurveTimeline.Play();
 	}
 }
@@ -59,6 +62,11 @@ void ADefenceExplosion::TraceExplosion(float ExpSize)
 		}
 		HitResult.GetComponent()->GetOwner()->Destroy();
 	}
+}
+
+void ADefenceExplosion::TraceExplosionFinished()
+{
+	Destroy();
 }
 
 void ADefenceExplosion::Tick(float DeltaTime)

@@ -28,36 +28,35 @@ public:
 	UFUNCTION()
 	int32 AmmoLeft();
 
-
 protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	USceneComponent* SceneRoot;
+	TObjectPtr<USceneComponent> SceneRoot;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UStaticMeshComponent* StaticMesh;
+	TObjectPtr<UStaticMeshComponent> StaticMesh;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UArrowComponent* Arrow;
+	TObjectPtr<UArrowComponent> Arrow;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	USceneComponent* Zero;
+	TObjectPtr<USceneComponent> Zero;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	USceneComponent* Even;
+	TObjectPtr<USceneComponent> Even;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	USceneComponent* Odd;
+	TObjectPtr<USceneComponent> Odd;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	int32 AmmoAmount = 16;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UStaticMesh* AmmoMesh;
+	TObjectPtr<UStaticMesh> AmmoMesh;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TArray<UStaticMeshComponent*> Rockets;
+	TArray<TObjectPtr<UStaticMeshComponent>> Rockets;
 
 public:
 	virtual void Tick(float DeltaTime) override;

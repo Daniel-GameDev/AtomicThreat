@@ -26,8 +26,3 @@ void APlaneEnemyRocket::TargetHit()
 	bSpawnDestroyedParticle = false;
 	Super::TargetHit();
 }
-
-int32 APlaneEnemyRocket::GetPoints()
-{
-	return Points;
-}

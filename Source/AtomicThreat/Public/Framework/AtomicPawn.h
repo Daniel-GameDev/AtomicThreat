@@ -19,13 +19,13 @@ public:
 	AAtomicPawn();
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite)
-	APlayerLauncherGridElement* PlayerLauncherGridElement;
+	TObjectPtr<APlayerLauncherGridElement> PlayerLauncherGridElement;
 
 protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly)
-	AAtomicPlayerController* AtomicPlayerController;
+	TObjectPtr<AAtomicPlayerController> AtomicPlayerController;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<ARocketBase> Rocket;

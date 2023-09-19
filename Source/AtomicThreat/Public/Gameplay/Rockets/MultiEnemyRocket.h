@@ -15,15 +15,10 @@ class ATOMICTHREAT_API AMultiEnemyRocket : public ARocketBase, public IPointsInt
 public:
 	virtual void BeginPlay() override;
 
-	virtual int32 GetPoints() override;
-
-	FORCEINLINE virtual void SetPoints(int32 NewPoints) override {}
-
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	int32 Points;
 
-protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = MultiRocketSettings)
 	int32 MinRocketAmount = 1;
 
@@ -47,4 +42,9 @@ protected:
 
 public:
 	virtual void Destroyed() override;
+
+	FORCEINLINE virtual int32 GetPoints() override { return Points; }
+
+	FORCEINLINE virtual void SetPoints(int32 NewPoints) override {}
+
 };
